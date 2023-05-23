@@ -1,0 +1,12 @@
+<!-- post_edit.html -->
+<!-- 記事編集用ページ-->
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    <h2>New post</h2>
+    <!--記事を編集→投稿する際にtokenを入れる-->
+    <form method="POST" class="post-form">{% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="sace btn btn-default">Save</button>
+    </form>
+{% endblock %}
