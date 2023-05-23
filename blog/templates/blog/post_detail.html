@@ -1,0 +1,60 @@
+{% extends 'blog/base.html' %}  
+
+{% block content %}
+    <div class ="post">
+        <!--投稿日時に日付があるか-->
+        {% if post.published_date %}
+            <div class="date">
+                {{ post.published_date }} <!--ブラウザ上に日付を表示-->
+            </div>
+        {% else %}<!--ない場合は[publish]ボタンの表示-->
+            <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+        {% endif %} 
+         <!--<a class="btn btn-default" href="
+            <div data-gb-custom-block data-tag="url" data-0='post_publish'>">
+            Publish</a>
+            </div> -->
+            <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            
+            <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">
+                <span class="glyphicon glyphicon-remove"></span>
+            </a>
+
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.text | linebreaksbr }}</p>
+    </div>
+    
+    <!--以下はコメントモデル-->
+    <hr>
+    <a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
+    <!-- 当該記事に紐づけられているコメントを全件取得 -->
+    {% for comment in post.comments.all %}
+        <div class="comment">
+                <!--コメントが保存されたらブラウザ上にコメント日時を表示 -->
+                <div class="date">{{ comment.created_date }}</div>
+                <!--コメントが承認されていないときに、「チェック（承認）」「×（非承認）」のボタンを表示-->
+                {% if not comment.approved_comment %}
+                <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">
+                    <span class="glyphicon glyphicon-ok"></span>
+                </a>
+            <!-- endif -->
+            {% endif %}
+            
+            <!-- endif -->
+                <!--投稿されたコメントを表示-->
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.text|linebreaks }}</p>
+            </div>
+        
+        {% empty %}
+        <!--<div data-gb-custom-block data-tag="empty"> -->
+            <p>コメントはありません。</p>
+        {% endfor %}
+</div>
+
+{% endblock %}

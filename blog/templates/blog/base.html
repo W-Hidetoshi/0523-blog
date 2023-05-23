@@ -1,0 +1,48 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Django Girls blog</title>
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+        <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+        
+    </head>
+    <body>
+        <div class="page-header">
+            {% if user.is_authenticated %}
+                <!--新規投稿ボタン-->
+                <a href="{% url 'post_new' %}" class="top-menu">
+                    <span class="glyphicon glyphicon-plus"></span>
+                </a>
+                <!--下書きリスト-->    
+                <a href="{% url 'post_draft_list'%}" class="top-menu">
+                    <span class="glyphicon glyphicon-edit"></span>
+                </a>
+                <!--ユーザー名表示とログアウト画面表示-->
+                <p class="top-menu">Hello {{ user.username }}
+                    <small>
+                        (<a href="{% url 'logout' %}">Log out</a>)
+                    </small>
+                </p>
+            <!--未ログイン（もしくはログアウト後の画面）-->
+            {% else %}
+                <a href="{% url 'login' %}" class="top-menu">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </a>
+            {% endif %}
+            <h1><a href="/">Django Girls Blog</a></h1>
+        </div>
+        
+        <div class="content container">
+            <div class="row">
+                <div class="col-md-8">
+                    {% block content %}
+                    <!--ここの間の部分が動的に変化する-->
+                    {% endblock %}
+                </div>
+            </div>
+        </div>
+    </body>                
+</html>
