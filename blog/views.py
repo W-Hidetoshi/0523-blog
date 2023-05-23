@@ -7,6 +7,7 @@ from .models import Post,Comment
 from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
+from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
@@ -93,3 +94,16 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
+
+def index(request):
+    Posts = Post.objects.order_by('created_date').reverse()
+    paginator = Paginator(Posts,3)
+    page = request.Get.get('page',1)
+    try:
+        pages = paginator.page(page)
+    except PageNotAnInteger:
+        pages = paginator.page(1)
+    except EmptyPage:
+        pages = paginator.page(1)
+    context ={'pages': pages}
+    return render(request, 'index.html',context)

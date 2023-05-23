@@ -15,5 +15,30 @@
             </a>
             <!--<a href="<div data-gb-custom-block data-tag="url" data-0='post_detail'></div>
             ">Comments: {{ post.comments.count }}</a>-->
-            {% endfor %}
+        {% endfor %}
+        {% if pages.has_other_pages %}
+        <nav aria-label="Page Navigation">
+            <ul class="pagination">
+                {% if pages.has_previous %}
+                    {% if pages.previous_page_number != 1 %}
+                    <li>
+                        <a class="page-link text-primary d-inline-block" href="?page=1">1</a></li>                    
+                        <li>...</li>
+                    {% endif %}
+                    <a class="page-link text-primary d-inline-block" href="?page{{ pages.previous_page_number }}">{{ pages.previous_page_number }}</a>
+                {% endif %}    
+                <li class="disabled">
+                    <div class="page-link text-primary d-inline-block disabled" href="#">{{ pages.number }}</div>
+                </li>
+            </ul>
+        </nav>
+
+
+
+
+
+
+        {% endif %}
+
+
     {% endblock %}
