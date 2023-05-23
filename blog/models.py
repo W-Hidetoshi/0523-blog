@@ -3,6 +3,7 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+
 #投稿のシステム部分
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -36,4 +37,3 @@ class Comment(models.Model):
     def __str__(self):
         return self.text    
 
-    

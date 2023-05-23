@@ -5,6 +5,7 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
 from .models import Post,Comment
 from .forms import PostForm,CommentForm
+
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
 
@@ -93,3 +94,5 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
+
+    
