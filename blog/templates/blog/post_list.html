@@ -16,6 +16,8 @@
             <!--<a href="<div data-gb-custom-block data-tag="url" data-0='post_detail'></div>
             ">Comments: {{ post.comments.count }}</a>-->
         {% endfor %}
+        
+        <!-- 以下はページネーション用-->
         {% if pages.has_other_pages %}
         <nav aria-label="Page Navigation">
             <ul class="pagination">

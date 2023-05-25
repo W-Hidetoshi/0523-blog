@@ -95,7 +95,7 @@ def comment_remove(request, pk):
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
 
-<<<<<<< HEAD
+# ページングを行う機構
 def index(request):
     Posts = Post.objects.order_by('created_date').reverse()
     paginator = Paginator(Posts,3)
@@ -108,6 +108,3 @@ def index(request):
         pages = paginator.page(1)
     context ={'pages': pages}
     return render(request, 'index.html',context)
-=======
-    
->>>>>>> bd214e5ff01ad89ed61fc814b7fc4b451fe975f3
