@@ -9,9 +9,39 @@ from .forms import PostForm,CommentForm
 #ここで、"."は"/"の意味。
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
+#
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request,'blog/post_list.html',{'posts':posts})
+    #Posts = Post.objects.order_by('created_date').reverse()
+    #context ={'pages': pages}
+    context_post = {'posts': posts}
+    '''
+    paginator = Paginator(posts,2)
+    page = request.GET.get('page',1)
+    try:
+        pages = paginator.page(page)
+    except PageNotAnInteger:
+        pages = paginator.page(1)
+    except EmptyPage:
+        pages = paginator.page(1)
+    context_page ={'pages': pages} 
+    '''
+    
+    return render(request, 'blog/post_list.html',context_post)
+
+'''def post_index(request):
+    Posts = Post.objects.order_by('created_date').reverse()
+    paginator = Paginator(Posts,2)
+    page = request.GET.get('page',1)
+    try:
+        pages = paginator.page(page)
+    except PageNotAnInteger:
+        pages = paginator.page(1)
+    except EmptyPage:
+        pages = paginator.page(1)
+    context ={'pages': pages}
+    return render(request, 'blog/post_list.html',context)
+'''
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
 #新規記事投稿
