@@ -8,13 +8,19 @@ from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
-
+from django.views.generic import ListView
+'''
+class PostListView(ListView):
+    model = post_list
+    template_name = 'post_list.html'
+    paginate_by = 10    #一度に表示するレコード数
+'''
 
 def post_list(request):
     posts = Post.objects.order_by('created_date').reverse()
     #context ={'pages': pages}
     #context_post = {'posts': posts}
-    paginator = Paginator(posts,1)
+    paginator = Paginator(posts,2)
     page_num = request.GET.get('page',1)
 
     try:
