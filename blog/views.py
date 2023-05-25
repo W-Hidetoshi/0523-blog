@@ -9,29 +9,28 @@ from .forms import PostForm,CommentForm
 #ここで、"."は"/"の意味。
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 
-#
+
 def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    #Posts = Post.objects.order_by('created_date').reverse()
+    posts = Post.objects.order_by('created_date').reverse()
     #context ={'pages': pages}
-    context_post = {'posts': posts}
-    '''
-    paginator = Paginator(posts,2)
-    page = request.GET.get('page',1)
+    #context_post = {'posts': posts}
+    paginator = Paginator(posts,1)
+    page_num = request.GET.get('page',1)
+
     try:
-        pages = paginator.page(page)
+        pages = paginator.page(page_num)
     except PageNotAnInteger:
         pages = paginator.page(1)
     except EmptyPage:
         pages = paginator.page(1)
-    context_page ={'pages': pages} 
-    '''
-    
-    return render(request, 'blog/post_list.html',context_post)
+    #context_page ={'pages': pages} 
+   
+    return render(request, 'blog/post_list.html', {'pages':pages,'posts':posts})
 
-'''def post_index(request):
-    Posts = Post.objects.order_by('created_date').reverse()
-    paginator = Paginator(Posts,2)
+'''
+def post_index(request):
+    Posts_a = Post.objects.order_by('created_date').reverse()
+    paginator = Paginator(Posts_a,2)
     page = request.GET.get('page',1)
     try:
         pages = paginator.page(page)
@@ -40,7 +39,7 @@ def post_list(request):
     except EmptyPage:
         pages = paginator.page(1)
     context ={'pages': pages}
-    return render(request, 'blog/post_list.html',context)
+    return render(request, 'blog/templates/blog/base.html',context)
 '''
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
