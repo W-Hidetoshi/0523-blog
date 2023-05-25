@@ -94,17 +94,3 @@ def comment_remove(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     comment.delete()
     return redirect('post_detail', pk=comment.post.pk)
-
-# ページングを行う機構
-def index(request):
-    Posts = Post.objects.order_by('created_date').reverse()
-    paginator = Paginator(Posts,3)
-    page = request.Get.get('page',1)
-    try:
-        pages = paginator.page(page)
-    except PageNotAnInteger:
-        pages = paginator.page(1)
-    except EmptyPage:
-        pages = paginator.page(1)
-    context ={'pages': pages}
-    return render(request, 'index.html',context)
