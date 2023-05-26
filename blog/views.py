@@ -20,18 +20,17 @@ def post_list(request):
     posts = Post.objects.order_by('created_date').reverse()
     #context ={'pages': pages}
     #context_post = {'posts': posts}
-    paginator = Paginator(posts,3)
+    paginator = Paginator(posts,2)
     page_num = request.GET.get('page',1)
-    pages = paginator.page(page_num)
+    #pages = paginator.page(page_num)
     
-    '''
     try:
         pages = paginator.page(page_num)
     except PageNotAnInteger:
         pages = paginator.page(1)
     except EmptyPage:
         pages = paginator.page(1)
-    '''
+    
     #context_page ={'pages': pages} 
    
     return render(request, 'blog/post_list.html', {'pages':pages,'posts':posts,'page_num':page_num})

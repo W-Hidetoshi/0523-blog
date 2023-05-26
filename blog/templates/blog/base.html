@@ -3,10 +3,11 @@
 <html>
     <head>
         <title>Django Girls blog</title>
-       <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-        <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
+       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+       <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+        <!--<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"> -->
         <link rel="stylesheet" href="{% static 'css/blog.css' %}">
         <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
         
@@ -16,11 +17,13 @@
             {% if user.is_authenticated %}
                 <!--新規投稿ボタン-->
                 <a href="{% url 'post_new' %}" class="top-menu">
-                    <span class="glyphicon glyphicon-plus"></span>
+                    <!--<span class="glyphicon glyphicon-plus"></span>-->
+                    <span class="bi-plus" alt="plus"></span>
                 </a>
-                <!--下書きリスト-->    
+                <!--下書きリスト--> 
                 <a href="{% url 'post_draft_list'%}" class="top-menu">
-                    <span class="glyphicon glyphicon-edit"></span>
+                    <!--<span class="glyphicon glyphicon-edit"></span>-->
+                    <span class="bi-pencil-square" alt="edit"></span>
                 </a>
                 <!--ユーザー名表示とログアウト画面表示-->
                 <p class="top-menu">Hello {{ user.username }}
@@ -31,7 +34,8 @@
             <!--未ログイン（もしくはログアウト後の画面）-->
             {% else %}
                 <a href="{% url 'login' %}" class="top-menu">
-                    <span class="glyphicon glyphicon-lock"></span>
+                    <!--<span class="glyphicon glyphicon-lock"></span>-->
+                    <span class="bi-lock" alt="lock"></span>
                 </a>
             {% endif %}
             <h1><a href="/">Django Girls Blog</a></h1>

@@ -8,14 +8,19 @@
                 {{ post.published_date }} <!--ブラウザ上に日付を表示-->
             </div>
         {% else %}<!--ない場合は[publish]ボタンの表示-->
+            <button type="button" class="btn btn-outline-primary">
+                <a href="{% url 'post_publish' pk=post.pk %}">Publish</a>
+            </button>
             <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
         {% endif %} 
             <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
-                <span class="glyphicon glyphicon-pencil"></span>
+                <!--<span class="glyphicon glyphicon-pencil"></span>-->
+                <span class ="bi-pencil"></span>
             </a>
             
             <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">
-                <span class="glyphicon glyphicon-remove"></span>
+                <!--<span class="glyphicon glyphicon-remove"></span>-->
+                <span class="bi-file-earmark-x" alt="elace"></span>
             </a>
 
         <h2>{{ post.title }}</h2>
@@ -33,7 +38,8 @@
                 <!--コメントが承認されていないときに、「チェック（承認）」「×（非承認）」のボタンを表示-->
                 {% if not comment.approved_comment %}
                 <a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">
-                    <span class="glyphicon glyphicon-remove"></span>
+                    
+                    <!--<span class="glyphicon glyphicon-remove"></span>-->
                 </a>
                 <a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">
                     <span class="glyphicon glyphicon-ok"></span>
