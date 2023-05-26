@@ -22,16 +22,19 @@ def post_list(request):
     #context_post = {'posts': posts}
     paginator = Paginator(posts,3)
     page_num = request.GET.get('page',1)
-
+    pages = paginator.page(page_num)
+    
+    '''
     try:
         pages = paginator.page(page_num)
     except PageNotAnInteger:
         pages = paginator.page(1)
     except EmptyPage:
         pages = paginator.page(1)
+    '''
     #context_page ={'pages': pages} 
    
-    return render(request, 'blog/post_list.html', {'pages':pages,'posts':posts})
+    return render(request, 'blog/post_list.html', {'pages':pages,'posts':posts,'page_num':page_num})
 
 '''
 def post_index(request):

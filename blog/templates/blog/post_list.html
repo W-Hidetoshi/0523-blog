@@ -3,24 +3,29 @@
             
     {% block content %}
 
-      <!--{% for post in posts %}--> 
-        {% for page in pages %}
+      {# <!--{% for post in posts %}--> #}
+        {% for post in pages %}
             <div class="post">
                 <div class="date">
-                    <!--{{ post.published_date }}-->
-                    {{ page.published_date }} 
+                    {{ post.published_date }}
+                    <!--{{ page.published_date }}--> 
                 </div>             
-                <!--<h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>-->
-                <h2><a href="{% url 'post_detail' pk=page.pk%}">{{ page.title }}</a></h2>
-                <!--<p>{{ post.text | linebreaksbr }}</p> -->
-                <p>{{ page.text | linebreaksbr }}</p>
+                <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+                {% comment %}
+                <!--<h2><a href="{% url 'post_detail' pk=page.pk%}">{{ page.title }}</a></h2>-->
+                {% endcomment %}
+                <p>{{ post.text | linebreaksbr }}</p> 
+                <!--<p>{{ page.text | linebreaksbr }}</p>-->
                 </div>
-                <!--<a href="{% url 'post_detail' pk=post.pk %}">
+                <a href="{% url 'post_detail' pk=post.pk %}">
+                    Comments:{{ post.approved_comments.count }}
+                </a>
+                <br>
+                {% comment %}
+                <!--<a href="{% url 'post_detail' pk=page.pk %}">
                     Comments:{{ post.approved_comments.count }}
                 </a>-->
-                <a href="{% url 'post_detail' pk=page.pk %}">
-                    Comments:{{ post.approved_comments.count }}
-                </a>          
+                {% endcomment %}          
         {% endfor %}
 
         <!-- ここからはページネーション -->
@@ -50,13 +55,12 @@
             {% endfor %}
 
             {% if pages.has_next %}
-                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}">>></a></li>
+                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}"> >> </a></li>
             {% else %}
-                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>
+                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"> >> </div></li>
             {% endif %}
         </ul>
     </nav>
   {% endif %}
-  {% endfor %}
 {% endblock %}
        

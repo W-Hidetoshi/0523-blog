@@ -10,10 +10,6 @@
         {% else %}<!--ない場合は[publish]ボタンの表示-->
             <a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>
         {% endif %} 
-         <!--<a class="btn btn-default" href="
-            <div data-gb-custom-block data-tag="url" data-0='post_publish'>">
-            Publish</a>
-            </div> -->
             <a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
                 <span class="glyphicon glyphicon-pencil"></span>
             </a>
@@ -52,7 +48,7 @@
             </div>
         
         {% empty %}
-        <!--<div data-gb-custom-block data-tag="empty"> -->
+        
             <p>コメントはありません。</p>
         {% endfor %}
 </div>
