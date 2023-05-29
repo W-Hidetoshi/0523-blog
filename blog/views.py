@@ -20,7 +20,7 @@ def post_list(request):
     posts = Post.objects.order_by('created_date').reverse()
     #context ={'pages': pages}
     #context_post = {'posts': posts}
-    paginator = Paginator(posts,1)
+    paginator = Paginator(posts,5)
     page_num = request.GET.get('page',1)
     #pages = paginator.page(page_num)
     
