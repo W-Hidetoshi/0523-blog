@@ -13,13 +13,26 @@ from django.db.models import Q     # get_queryset()用に追加
 from django.contrib import messages  #検索結果のメッセージ
 
 
-'''
 class PostListView(ListView):
-    model = post_list
-    template_name = 'blog/post_list.html'
-    paginate_by = 10    #一度に表示するレコード数
-'''
-
+    context_object_name='post_list'  #状態名
+    queryset = Post.objects.order_by('-created_date')
+    template_name = 'blog/post_serch_result.html'
+    #template_name ='blog/post_list.html'
+    paginate_by = 1   #一度に表示するレコード数
+    model = Post
+    
+    def get_queryset(self):
+        queryset = Post.objects.order_by('-created_date')
+        query = self.request.GET.get('query')
+        
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query)|Q(text__icontains=query)
+            )
+        #messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
+        
+        return queryset
+'''    
 def post_list(request):
     posts = Post.objects.order_by('created_date').reverse()
     #context ={'pages': pages}
@@ -39,7 +52,7 @@ def post_list(request):
    
     return render(request, 'blog/post_list.html', {'pages':pages,'posts':posts,'page_num':page_num})
 
-'''
+
 def post_index(request):
     Posts_a = Post.objects.order_by('created_date').reverse()
     paginator = Paginator(Posts_a,2)
