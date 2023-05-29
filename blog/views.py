@@ -9,10 +9,14 @@ from .forms import PostForm,CommentForm
 #ここで、"."は"/"の意味。
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.views.generic import ListView
+from django.db.models import Q     # get_queryset()用に追加
+from django.contrib import messages  #検索結果のメッセージ
+
+
 '''
 class PostListView(ListView):
     model = post_list
-    template_name = 'post_list.html'
+    template_name = 'blog/post_list.html'
     paginate_by = 10    #一度に表示するレコード数
 '''
 
