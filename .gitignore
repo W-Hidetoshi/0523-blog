@@ -7,4 +7,4 @@ db.sqlite3
 /static
 .DS_Store
 blog/templates/blog/oldindex.html
-blog/templates/blog/paginationtest.html
+
