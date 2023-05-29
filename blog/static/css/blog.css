@@ -10,6 +10,10 @@ body {
     margin-top: 0;
     padding:20px 20px 20px 40px;
 }
+.search_area{
+    margin:0 auto 0 0;
+    background-color: cadetblue;
+}
 
 .page-header h1, .page-header a, .page-header h1 a:visited, .page-header h1 a:active{
     color: #ffffff;

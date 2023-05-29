@@ -40,7 +40,15 @@
             {% endif %}
             <h1><a href="/">Django Girls Blog</a></h1>
         </div>
-        
+        <div class="search_area">
+           <form method="get">
+                <input type="search" value="*" name="query" type="text" placeholder="検索ワードを入力">
+            <button>検索</button>
+           </form>
+           <br>
+        </div>
+
+
         <div class="content container">
             <div class="row">
                 <div class="col-md-8">
