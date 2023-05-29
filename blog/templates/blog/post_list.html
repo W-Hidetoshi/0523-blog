@@ -2,7 +2,14 @@
 {% extends 'blog/base.html' %}
             
     {% block content %}
-
+    <div class="search_area">
+        <form method="get">
+             <input type="search" value="*" name="query" type="text" placeholder="検索ワードを入力">
+         <button>検索</button>
+        </form>
+        <br>
+     </div>
+     
       {# <!--{% for post in posts %}--> #}
         {% for post in pages %}
             <div class="post">
