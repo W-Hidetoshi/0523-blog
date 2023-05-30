@@ -10,14 +10,14 @@
         </form>
         <br>
      </div>
-
+    <!--検索結果並びに全レコード表示-->
     {% for obj in page_obj %}
      <div class="post">
         <div class="date">
             {{ obj.published_date }}
         </div>
-     <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
-     <p>{{ obj.text| linebreaksbr }}</p>
+        <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
+         <p>{{ obj.text| linebreaksbr }}</p>
      </div>
      <a href="{% url 'post_detail' pk=obj.pk %}">
         Comments:{{ obj.approved_comments.count }}
@@ -43,11 +43,14 @@
      {% endcomment %}
     
      <!--ページネーション-->
+     <nav aria-label="Page Navigation">
+     <ul class="pagination">  
      {% if page_obj.has_previous %}
-        <nav aria-label="Page Navigation">
-            <ul class="pagination">  
-                <li><a class="page-link text-primary d-inline-block" href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
-                    <<</a></li>
+        <li>
+            <a class="page-link text-primary d-inline-block" href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
+                <<
+            </a>
+        </li>
             {% else %}
                 <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><<</div></li>
             {% endif %}
@@ -67,8 +70,7 @@
             {% if page_obj.has_next %}
                 <li><a class="page-link text-primary d-inline-block" href="?page={{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">>></a></li>
             {% else %}
-                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>
-                
+                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>  
         </ul>
     </nav>
     {% endif %}
