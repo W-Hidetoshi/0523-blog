@@ -17,6 +17,10 @@ body {
     text-decoration: none;
 }
 
+.search_area{
+    margin-left: 50%;   
+}
+
 .content {
     margin-left:40px;
 }

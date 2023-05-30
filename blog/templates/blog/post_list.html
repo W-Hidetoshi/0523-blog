@@ -2,6 +2,7 @@
 {% extends 'blog/base.html' %}
 
     {% block content %}
+        <!--検索窓-->    
         <div class="search_area">
             <form method="get">
                 <input type="search" value="{{ request.GET.query }}" name="query" type="text" placeholder="検索ワードを入力">
@@ -9,8 +10,10 @@
                 <input type="reset">
             </form>
             <br>
-        </div>
+        </div> 
+    
     <!--検索結果並びに全レコード表示-->
+    {% comment %}
     {% for obj in page_obj %}
         <div class="post">
             <div class="date">
@@ -22,10 +25,11 @@
         <a href="{% url 'post_detail' pk=obj.pk %}">
             Comments:{{ obj.approved_comments.count }}
         </a>
-{% endfor %} 
+    {% endfor %} 
 {% endblock %}
+{% endcomment %}
 
-{% comment %}
+{#{% comment %}#}
 {% for post in posts %}
 <div class="post">
     <div class="date">
@@ -41,4 +45,4 @@
             ">Comments: {{ post.comments.count }}</a>-->
 {% endfor %}
 {% endblock %}
-{% endcomment %}
+{#{% endcomment %}#}
