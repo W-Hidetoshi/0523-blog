@@ -8,7 +8,7 @@ from .forms import PostForm,CommentForm
 #↑ from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味　ここで、"."は"/"or"\"の意味
 from django.views.generic import ListView #検索およびページネーションを行うListView
 from django.db.models import Q #get_queryset()用の関数
-from fjango.contrib import messages #検索結果のメッセージ
+from django.contrib import messages #検索結果のメッセージ
 
 class PostListView(ListView):
     context_object_name='post_list' #状態名
