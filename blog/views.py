@@ -18,7 +18,7 @@ class PostListView(ListView):
     queryset = Post.objects.order_by('-created_date')
     template_name = 'blog/post_serch_result.html'
     #template_name ='blog/post_list.html'
-    paginate_by = 1   #一度に表示するレコード数
+    paginate_by = 5   #一度に表示するレコード数
     model = Post
     
     def get_queryset(self):
