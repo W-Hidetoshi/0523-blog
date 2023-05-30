@@ -15,7 +15,7 @@ class PostListView(ListView):
     #s_query='-created_date' #作成日時を降順に
     queryset = Post.objects.order_by('-created_date')
     template_name = 'post_list.html'
-    paginate_by = 20
+    paginate_by = 20   #1ページに何件のレコードを表示させるか
     model = Post
     
     def get_quertset(self):
