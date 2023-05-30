@@ -5,8 +5,29 @@ from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
 from .models import Post,Comment
 from .forms import PostForm,CommentForm
-#↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
-#ここで、"."は"/"の意味。
+#↑ from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味　ここで、"."は"/"or"\"の意味
+from django.views.generic import ListView #検索およびページネーションを行うListView
+from django.db.models import Q #get_queryset()用の関数
+from fjango.contrib import messages #検索結果のメッセージ
+
+class PostListView(ListView):
+    context_object_name='post_list' #状態名
+    s_query='-created_date' #作成日時を降順に
+    queryset = Post.objects.order_by('s_query')
+    template_name = 'blog/post_list.html'
+    #paginate_by =          #一度に表示するレコード数 
+    model = Post
+    
+    def get_quertset(self):
+        queryset = Post
+        query = self.request.GET.get('query')
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query)|Q(text__icontains=query)
+            )
+        #messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
+        
+        return queryset
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
