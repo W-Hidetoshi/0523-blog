@@ -33,7 +33,7 @@
         {% if pages.has_other_pages %}
             <nav aria-label="Page Navigation">
             <ul class="pagination">
-        
+    
             {% if page_obj.has_previous %}
                 <li>
                     <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif%}">
@@ -62,15 +62,15 @@
             </ul>
             </nav>
             {% endif %}
-               
-            
+
+
         {% comment %}    
             {% if pages.has_previous %}
                     <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}"> << </a></li>
                 {% else %}
                     <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"> << </div></li>
                 {% endif %}
-
+    
             {% if pages.has_previous %}
                 {% if pages.previous_page_number != 1 %}
                     <li><a class="page-link text-primary d-inline-block" href="?page=1">1</a></li>
