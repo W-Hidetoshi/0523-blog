@@ -11,8 +11,7 @@ body {
     padding:20px 20px 20px 40px;
 }
 .search_area{
-    margin: left 80%;
-    background-color: cadetblue;
+    margin-left: 50%;   
 }
 
 .page-header h1, .page-header a, .page-header h1 a:visited, .page-header h1 a:active{
