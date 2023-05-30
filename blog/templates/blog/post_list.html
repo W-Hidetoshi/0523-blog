@@ -4,14 +4,16 @@
     {% block content %}
     <div class="search_area">
         <form method="get">
-             <input type="search" value="*" name="query" type="text" placeholder="検索ワードを入力">
+             <input type="search" value="{{ request.GET.query }}" name="query" type="text" placeholder="検索ワードを入力">
          <button>検索</button>
+        <input type="reset"> 
         </form>
         <br>
      </div>
-     
+
       {# <!--{% for post in posts %}--> #}
-        {% for post in pages %}
+        {% for post in post_list %}
+        {#{% for post in pages %}#}
             <div class="post">
                 <div class="date">
                     {{ post.published_date }}
