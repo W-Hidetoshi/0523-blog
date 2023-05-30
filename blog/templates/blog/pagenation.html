@@ -1,0 +1,24 @@
+<!--ページネーション用-->
+{% if is_pagenated %}
+    {% if pages.has_other_pages %}
+        <nav aria-label="Page Navigation">
+        <ul class="pagination">
+    {% endif %}
+    {% if page_obj.has_previous %}
+        <li>
+                <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
+                    Previous
+                </a>
+        </li>
+    {% endif %}
+    {% if page_obj.has_next %}
+    <li>
+        <a href="?page{{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
+            NEXT
+        </a>
+    </li>
+    {% endif %}
+    </ul>
+    </nav>
+    {% endif %}
+{% endif %}
