@@ -11,6 +11,20 @@
         <br>
      </div>
 
+    {% for obj in page_obj %}
+     <div class="post">
+        <div class="date">
+            {{ obj.published_date }}
+        </div>
+     <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
+     <p>{{ obj.text| linebreaksbr }}</p>
+     </div>
+     <a href="{% url 'post_detail' pk=obj.pk %}">
+        Comments:{{ obj.approved_comments.count }}
+     </a>
+    {% endfor %} 
+    
+    {% comment %}
      {% for post in post_list %}
      <div class="post">
         <div class="date">
@@ -26,51 +40,19 @@
         </a>
         <br>
      {% endfor %}
-
-    <!-- 以下はページネーションの動き -->
-     <!-- ここからはページネーション -->
-     {% if is_paginated %}
-        {% if pages.has_other_pages %}
-            <nav aria-label="Page Navigation">
-            <ul class="pagination">
+     {% endcomment %}
     
-            {% if page_obj.has_previous %}
-                <li>
-                    <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif%}">
-                        Previous
-                    </a>
-                </li>
-            {% endif %}
-            {% for num in paginator.page_renge %}
-                {% if page_obj.number == num %}
-                    <li>{{ num }}</li>
-            {% else %}
-            <li>
-                <a href="?page{{ num }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
-                    {{ num }}
-                </a>
-            </li>
-            {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <li>
-                    <a href="?page{{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
-                        NEXT
-                    </a>
-                </li>
-                {% endif %}
-            </ul>
-            </nav>
-            {% endif %}
-
-
-        {% comment %}    
-            {% if pages.has_previous %}
+     <!--ページネーション-->
+     
+     {% if pages.has_other_pages %}
+        <nav aria-label="Page Navigation">
+            <ul class="pagination">
+                {% if pages.has_previous %}
                     <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}"> << </a></li>
                 {% else %}
                     <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"> << </div></li>
                 {% endif %}
-    
+
             {% if pages.has_previous %}
                 {% if pages.previous_page_number != 1 %}
                     <li><a class="page-link text-primary d-inline-block" href="?page=1">1</a></li>
@@ -92,10 +74,45 @@
                 <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"> >> </div></li>
             {% endif %}
         </ul>
-    </nav>
-    {% endif %}
-{% endcomment %}
-    {% endif %}
+    </nav>  
+     
+     
+     
+     {% comment %}
+     {% if is_pagenated %}
+        {% if page_obj.has_other_pages %}
+            <nav aria-label="Page Navigation">
+            <ul class="pagination">
+        {% endif %}
+        {% if page_obj.has_previous %}
+         <li>
+                 <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
+                     Previous
+                 </a>
+         </li>
+        {% endif %}
+        {% if page_obj.has_next %}
+     <li>
+         <a href="?page{{ page_obj.next_page_number }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">
+             NEXT
+         </a>
+     </li>
+        {% endif %}
+     </ul>
+     </nav>
+     
+ {% endif %}
+ {% endcomment %}
 
 
-{% endblock %}
+
+
+    
+    
+    
+     
+
+     {% endblock %}
+
+    
+     
