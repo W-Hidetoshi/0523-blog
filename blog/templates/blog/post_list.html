@@ -12,6 +12,24 @@
             <br>
         </div> 
     
+    <!--検索結果を表示-->
+    {% if messages %}
+        <ul class="messages">
+
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    <h2>{{ message }}</h2>
+                </li>
+                {% else %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    <h2>"{{ message }}"を含む検索結果：</h2>
+                </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}    
+
     <!--検索結果並びに全レコード表示-->
     {% comment %}
     {% for obj in page_obj %}
