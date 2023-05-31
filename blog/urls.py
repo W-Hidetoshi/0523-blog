@@ -3,7 +3,7 @@ from django.urls import path,re_path,include
 from . import views
 
 urlpatterns=[
-    path('',views.post_list,name='post_list'),
+    #path('',views.post_list,name='post_list'),
     path('',views.PostListView.as_view(),name='post_list'),
     path('accounts/',include('django.contrib.auth.urls')),
     path('post/<int:pk>',views.post_detail,name='post_detail'),
