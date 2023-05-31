@@ -18,7 +18,8 @@ body {
 }
 
 .search_area{
-    margin-left: 50%;   
+    margin-left: 50%;
+    background-color: aliceblue;
 }
 
 .content {
