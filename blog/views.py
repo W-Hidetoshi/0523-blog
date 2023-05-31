@@ -12,10 +12,9 @@ from django.contrib import messages #検索結果のメッセージ
 
 class PostListView(ListView):
     context_object_name='post_list' #状態名
-    #s_query='-created_date' #作成日時を降順に
     queryset = Post.objects.order_by('-created_date')
     template_name = 'post_list.html'
-    paginate_by = 20   #1ページに何件のレコードを表示させるか
+    paginate_by = 5   #1ページに何件のレコードを表示させるか
     model = Post
     
     def get_quertset(self):
@@ -25,7 +24,7 @@ class PostListView(ListView):
             queryset = queryset.filter(
                 Q(title__icontains=query)|Q(text__icontains=query)
             )
-        messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
+        #messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         
         return queryset
     
