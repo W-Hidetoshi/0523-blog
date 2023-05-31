@@ -13,11 +13,11 @@ from django.contrib import messages #検索結果のメッセージ
 class PostListView(ListView):
     context_object_name='post_list' #状態名
     queryset = Post.objects.order_by('-created_date')
-    template_name = 'post_list.html'
-    paginate_by = 5   #1ページに何件のレコードを表示させるか
+    template_name = 'blog/post_list.html'
+    #paginate_by = 5   #1ページに何件のレコードを表示させるか
     model = Post
     
-    def get_quertset(self):
+    def get_queryset(self):
         queryset = Post.objects.order_by('-created_date')
         query = self.request.GET.get('query')
         if query:
@@ -27,7 +27,6 @@ class PostListView(ListView):
         #messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         
         return queryset
-    
     
 
 def post_list(request):
