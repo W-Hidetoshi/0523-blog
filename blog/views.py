@@ -24,7 +24,14 @@ class PostListView(ListView):
             queryset = queryset.filter(
                 Q(title__icontains=query)|Q(text__icontains=query)
             )
-        #messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
+            # 検索文字数100文字以上の判定
+            print(len(query))  #コンソール上で文字数の長さをカウント
+            if len(query) > 100 :
+                print("error")
+                messages.add_message(self.request,messages.ERROR,'100文字以内で入力してください.')
+                #messages.error(self.request,'100文字以内で入力してください。')
+            else :
+                messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         
         return queryset
     
