@@ -7,6 +7,12 @@ from .models import Post,Comment
 from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
+from django.views.generic import ListView
+
+class PostViewList(ListView):
+    template_name = 'blog/post_list.html'
+
+
 
 
 def post_list(request):
