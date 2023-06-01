@@ -7,6 +7,32 @@ from .models import Post,Comment
 from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
+from django.views.generic import ListView #検索およびページネーションを行うListView
+from django.db.models import Q #get_queryset()用の関数
+from django.contrib import messages #検索結果のメッセージ
+
+class PostListView(ListView):
+    context_object_name='post_list' #状態名
+    queryset = Post.objects.order_by('-created_date')
+    template_name = 'blog/post_list.html'
+    #paginate_by = 5   #1ページに何件のレコードを表示させるか
+    model = Post
+    
+    def get_queryset(self):
+        queryset = Post.objects.order_by('-created_date')
+        query = self.request.GET.get('query')
+        if query:
+            queryset = queryset.filter(
+                Q(title__icontains=query)|Q(text__icontains=query)
+            )
+            if len(query) > 100 :
+                print("error")
+                messages.add_message(self.request,messages.ERROR,'100文字以内で入力してください.')
+                #messages.error(self.request,'100文字以内で入力してください。')
+            else :
+                messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
+        
+        return queryset
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
