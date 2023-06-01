@@ -10,9 +10,10 @@ from .forms import PostForm,CommentForm
 from django.views.generic import ListView
 
 class PostViewList(ListView):
+    context_object_name = 'post_list' #状態名
     template_name = 'blog/post_list.html'
-
-
+    paginate_by = 5  #1ページに何件のレコードを表示させるか
+    model = Post
 
 
 def post_list(request):
