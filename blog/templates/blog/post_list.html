@@ -4,7 +4,7 @@
 
 {% block content %}
 <!--レコード表示-->
-{% for post in posts %}
+{% for post in post_list %}
 <div class="post">
     <div class="date">
         {{ post.published_date }}
@@ -15,6 +15,7 @@
 <a href="{% url 'post_detail' pk=post.pk %}">
     Comments:{{ post.approved_comments.count }}
 </a>
+{% endfor %}
 
 <!--以下はページネーション-->
 <nav aria-label="Page Navigation">
@@ -61,5 +62,5 @@
     </ul>
     {% endif %}
 </nav>
-{% endfor %}
+
 {% endblock %}
