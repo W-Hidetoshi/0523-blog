@@ -9,7 +9,7 @@ from .forms import PostForm,CommentForm
 #ここで、"."は"/"の意味。
 from django.views.generic import ListView
 
-class PostViewList(ListView):
+class PostListView(ListView):
     context_object_name = 'post_list' #状態名
     template_name = 'blog/post_list.html'
     paginate_by = 5  #1ページに何件のレコードを表示させるか
