@@ -11,6 +11,11 @@ body {
     padding:20px 20px 20px 40px;
 }
 
+.search_area{
+    margin-left: 50%;
+    background-color: aliceblue;
+}
+
 .page-header h1, .page-header a, .page-header h1 a:visited, .page-header h1 a:active{
     color: #ffffff;
     font-size:36px;
