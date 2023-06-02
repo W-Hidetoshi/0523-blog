@@ -13,7 +13,7 @@ class PostListView(ListView):
     context_object_name = 'post_list' #状態名
     template_name = 'blog/post_list.html'
     queryset = Post.objects.order_by('-created_date')
-    paginate_by = 2  #1ページに何件のレコードを表示させるか
+    paginate_by = 5  #1ページに何件のレコードを表示させるか
     model = Post
 
 
