@@ -2,8 +2,36 @@
 <!-- 'blog/base.html' より継承 -->
 {% extends 'blog/base.html' %}
             
-    {% block content %}
-        {% for post in post_list %}
+      {% block content %}
+      <!--検索窓-->   
+      <div class="search_area">
+        <form method="get">
+            <input type="search" value="{{ request.GET.query }}" name="query" type="text" placeholder="検索ワードを入力">
+            <button>検索</button>
+            <input type="reset">
+        </form>
+        <br>
+    </div> 
+
+    <!--検索結果を表示-->
+    {% if messages %}
+        <ul class="messages">
+
+            {% for message in messages %}
+                {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    <h2>{{ message }}</h2>
+                </li>
+                {% else %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
+                    <h2>"{{ message }}"を含む検索結果：</h2>
+                </li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+    {% endif %}    
+        
+      {% for post in post_list %}
         <div class="post">
             <div class="date">
                 {{ post.published_date }}
@@ -32,7 +60,7 @@
             ">Comments: {{ post.comments.count }}</a>-->
             {% endfor %}
     {% endcomment %}
-
+        
     <!--以下はページネーション-->
     <nav aria-label="Page navigation">
         <ul class="pagination text-center">
