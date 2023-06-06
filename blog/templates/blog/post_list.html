@@ -30,7 +30,21 @@
             {% endfor %}
         </ul>
     {% endif %}    
-        
+    
+    {% for obj in page_obj %}
+    <div class="post">
+       <div class="date">
+           {{ obj.published_date }}
+       </div>
+       <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
+        <p>{{ obj.text| linebreaksbr }}</p>
+    </div>
+    <a href="{% url 'post_detail' pk=obj.pk %}">
+       Comments:{{ obj.approved_comments.count }}
+    </a>
+   {% endfor %} 
+    
+      {% comment %}
       {% for post in post_list %}
         <div class="post">
             <div class="date">
@@ -43,6 +57,7 @@
             Comments:{{ post.approved_comments.count }}
         </a>
         {% endfor %}    
+        {% endcomment %}
 
     {% comment %}
         {% for post in posts %}
@@ -73,6 +88,19 @@
             </li>
           {% endif %}
       
+          {% for page_num in page_obj.paginator.page_range %}
+                {% if page_num %}
+                    {% if page_num == page_obj.number %}
+                        <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">{{ page_num }}</div></li>
+                    {% else %}
+                        <li><a class="page-link text-primary d-inline-block" href="?page={{ page_num }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{ page_num }}</a></li>
+                    {% endif %}
+                {% else %}
+                    <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted" href="#">・・・</a></li>
+                {% endif %}
+            {% endfor %}
+
+          {% comment %}
           {% for num in page_obj.paginator.page_range %}
             {% if page_obj.number == num %}
               <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
@@ -80,7 +108,8 @@
               <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
             {% endif %}
           {% endfor %}
-      
+          {% endcomment %}
+          
           {% if page_obj.has_next %}
             <li class="page-item">
               <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
