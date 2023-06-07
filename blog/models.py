@@ -3,6 +3,14 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+# カテゴリーモデル
+class Category(models.Model):
+    name = models.CharField('カテゴリー',max_length=50)
+    
+    def __str__(self):
+        return self.name
+
+
 #投稿のシステム部分
 class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -10,6 +18,12 @@ class Post(models.Model):
     text = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null = True)
+    
+    #追加部分
+    category = models.ForeignKey(
+        Category,on_delete=models.PROTECT
+    )
+    
     
     def publish(self):
         self.published_date = timezone.now()
