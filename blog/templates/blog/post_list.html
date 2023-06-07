@@ -42,6 +42,7 @@
     <a href="{% url 'post_detail' pk=obj.pk %}">
        Comments:{{ obj.approved_comments.count }}
     </a>
+      <p>タグ：{{ tag }}</p>
    {% endfor %} 
     
       {% comment %}
