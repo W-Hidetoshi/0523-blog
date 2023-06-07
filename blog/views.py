@@ -11,6 +11,10 @@ from django.views.generic import ListView #検索およびページネーショ�
 from django.db.models import Q #get_queryset()用の関数
 from django.contrib import messages #検索結果のメッセージ
 
+#タグ機能（追記）
+class TagDetail(DetailView):
+    model = Tag
+
 class PostListView(ListView):
     context_object_name='post_list' #状態名
     queryset = Post.objects.order_by('-created_date')
