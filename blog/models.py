@@ -5,7 +5,7 @@ from django.utils import timezone
 
 # タグ付けのモデル(新しく定義)
 class Tag(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField('タグ',max_length=100)
 
     def __str__(self):
         return self.name
@@ -15,9 +15,13 @@ class Post(models.Model):
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     text = models.TextField()
+    
+    tags = models.ForeignKey(
+        Tag,on_delete=models.PROTECT, default=4,   
+    )
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null = True)
-    tags = models.ManyToManyField(Tag)  #タグ付け実装の部分
+    
     
     def publish(self):
         self.published_date = timezone.now()
