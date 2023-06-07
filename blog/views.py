@@ -3,11 +3,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
-from .models import Post,Comment
+from .models import Post,Comment,Tag
 from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
-from django.views.generic import ListView #検索およびページネーションを行うListView
+from django.views.generic import ListView,DetailView #検索およびページネーションを行うListView,Detailview:汎用クラスビュー
 from django.db.models import Q #get_queryset()用の関数
 from django.contrib import messages #検索結果のメッセージ
 
