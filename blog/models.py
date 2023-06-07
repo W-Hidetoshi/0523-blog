@@ -5,7 +5,7 @@ from django.utils import timezone
 
 # タグ付けのモデル(新しく定義)
 class Tag(models.Model):
-    name = models.CharField(max_length=200)
+    name = models.CharField(max_length=100)
 
     def __str__(self):
         return self.name
