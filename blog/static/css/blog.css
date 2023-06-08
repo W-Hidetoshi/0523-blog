@@ -42,6 +42,10 @@ h1,h2,h3,h4{
     padding-left: 5em;
 }
 
+.d_category{  /* draftページ用 */
+    color:#009999;
+    text-decoration: underline #006666;
+}
 .save {
     float:right;
 }
