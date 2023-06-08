@@ -14,6 +14,13 @@
             </button>
             <!--<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>-->    
         {% endif %}
+        <!--追加機能-->
+        {% if post.category %}
+            <div class="category">
+                カテゴリー：{{ post.category }}
+            </div>
+        {% endif %}
+
             <!--編集ボタン-->
             <button type="button" class="btn btn-outline-secondary">
                 <a href="{% url 'post_edit' pk=post.pk %}"><span class ="bi-pencil"></span></a>
