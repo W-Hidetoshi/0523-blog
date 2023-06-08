@@ -34,6 +34,11 @@ h1,h2,h3,h4{
     color:#828282;
 }
 
+.category{
+    color:#009999;
+    text-decoration: underline #006666;
+}
+
 .save {
     float:right;
 }
