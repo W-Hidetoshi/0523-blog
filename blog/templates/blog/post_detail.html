@@ -6,6 +6,9 @@
         {% if post.published_date %}
             <div class="date">
                 {{ post.published_date }} <!--ブラウザ上に日付を表示-->
+                <div class="category">
+                    カテゴリー：{{ post.category }}
+                </div>
             </div>
         {% else %}<!--ない場合は[publish]ボタンの表示-->
         <!--公開ボタン-->
@@ -14,6 +17,8 @@
             </button>
             <!--<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>-->    
         {% endif %}
+        
+ 
             <!--編集ボタン-->
             <button type="button" class="btn btn-outline-secondary">
                 <a href="{% url 'post_edit' pk=post.pk %}"><span class ="bi-pencil"></span></a>

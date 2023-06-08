@@ -7,6 +7,7 @@
 
             <div class="post">
                <p class="date">created: {{ post.created_date|date:'Y-m-d' }}</p>
+               <p class="d_category">カテゴリー：{{ post.category }}</p>
                 <h1><a href="{% url 'post_detail' pk=post.pk%}">{{ post.title }}</a></h1>
                 
                 <p>{{ post.text|truncatechars:200 }}</p>

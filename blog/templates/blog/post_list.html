@@ -34,8 +34,16 @@
     {% for obj in page_obj %}
     <div class="post">
        <div class="date">
-           {{ obj.published_date }}
+           {{ obj.published_date }}      
+           <div class="category">
+            カテゴリー:{{ obj.category }}
+           </div>
        </div>
+       {% comment %}
+       <div class="category">
+          {{ obj.category }}
+       </div>
+       {% endcomment %}
        <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
         <p>{{ obj.text| linebreaksbr }}</p>
     </div>
