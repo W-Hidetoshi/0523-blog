@@ -1,0 +1,13 @@
+<!-- コンテンツの内容で絞り込んだ後のページ-->
+<!-- post_contents_list.html -->
+{% extends 'blog/base.html' %}
+
+{% block content%}
+    <h1>{{ category.name  }}</h1>
+    {{ category.post_set.all }}
+
+    {% for obj in category.post_set.all %}
+        {{ obj.title }}
+    {% endfor %}
+
+{% endblock %}
