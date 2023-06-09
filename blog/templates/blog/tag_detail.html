@@ -1,0 +1,28 @@
+
+{% extends 'blog/base.html' %}  
+
+{% block content %}
+    <h2>{{ category.name }}</h2>
+    {{ category.post_set.all }}
+
+    {% for post in category.post_set.all %}
+        <div class="post">
+            {{ post.title }}
+            <div class="date">
+                    {{ obj.published_date }}      
+                <div class="category">
+                    カテゴリー:{{ obj.category }}
+                </div>
+            </div>
+        </div>    
+            <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
+            <p>{{ obj.text| linebreaksbr }}</p>
+    
+            <a href="{% url 'post_detail' pk=obj.pk %}">
+            Comments:{{ obj.approved_comments.count }}
+            </a>
+            <br><br>
+    {% endfor %}
+    
+      
+{% endblock %}
