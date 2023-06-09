@@ -19,11 +19,14 @@ class Post(models.Model):
     created_date = models.DateTimeField(default=timezone.now)
     published_date = models.DateTimeField(blank=True, null = True)
     
+    category = models.ManyToManyField(Category)
     #追加部分
+    ''' 
     category = models.ForeignKey(
-        Category,on_delete=models.PROTECT
+        Category,
+        on_delete=models.PROTECT,     
     )
-    
+    '''
     
     def publish(self):
         self.published_date = timezone.now()
