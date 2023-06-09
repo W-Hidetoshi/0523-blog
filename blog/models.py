@@ -23,7 +23,7 @@ class Post(models.Model):
      
     category = models.ForeignKey(
         Category,
-        on_delete=models.PROTECT,     
+        on_delete=models.CASCADE,     
     )
     
     def publish(self):
