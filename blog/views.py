@@ -3,7 +3,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
-from .models import Post,Comment
+from .models import Post,Comment,Category
 from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
@@ -33,10 +33,15 @@ class PostListView(ListView):
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         
         return queryset
+    
+class ContentsView(ListView):
+    model = Category 
+    template_name = 'blog/post_contents_list.html'
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request,'blog/post_list.html',{'posts':posts})
+
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
 #新規記事投稿
