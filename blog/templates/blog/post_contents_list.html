@@ -20,21 +20,19 @@
 {% if category_key %}
     <h3>カテゴリー：{{ category_key }}</h3>
 {% endif %}
+<hr>
 
 {% for post in post_list %}
-
-
-
-
-
-    <ul>
-        <li>
+    <div class="post">
+        <div class="date">
             {{ post.published_date }}
-            {{ post.category }}
-            {{ post.title }}
-            {{ post.text | linebreaksbr }}
+            <div class="category">カテゴリー：{{ post.category }}</div>
+        </div>
+    <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>        
+    <p>{{ post.text | linebreaksbr }}</p>
+        <a href="{% url 'post_detail' pk=post.pk %}">
             Comments:{{ obj.approved_comments.count }}
-        </li>
-    </ul>
+        </a>    
+    </div>
 {% endfor %}
 {% endblock %}
