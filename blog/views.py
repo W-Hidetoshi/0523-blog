@@ -11,6 +11,28 @@ from django.views.generic import ListView #検索およびページネーショ�
 from django.db.models import Q #get_queryset()用の関数
 from django.contrib import messages #検索結果のメッセージ
 
+class IndexView(ListView):
+    model = Post
+    template_name = 'blog/post_contents_list.html'
+    
+    def get_queryset(self):
+        queryset = Post.objects.order_by('-created_date')
+        return queryset
+    
+# カテゴリー一覧    
+class CategoryView(ListView):
+    model = Post
+    template_name = 'blog/post_contents_list.html'    
+    
+    def get_queryset(self):
+        category = Category.objects.get(name=self.kwargs['category'])
+
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_key'] = self.kwargs['category']
+        return context
+
+'''
 class PostListView(ListView):
     context_object_name='post_list' #状態名
     queryset = Post.objects.order_by('-created_date')
@@ -41,7 +63,7 @@ class ContentsView(ListView):
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request,'blog/post_list.html',{'posts':posts})
-
+'''
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
 #新規記事投稿
