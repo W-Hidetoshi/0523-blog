@@ -16,7 +16,8 @@ class IndexView(ListView):
     template_name = 'blog/post_contents_list.html'
     
     def get_queryset(self):
-        queryset = Post.objects.order_by('-created_date')
+        #queryset = Post.objects.order_by('-created_date')
+        queryset = Post.objects.order_by('-id')
         return queryset
     
 # カテゴリー一覧    
@@ -26,7 +27,11 @@ class CategoryView(ListView):
     
     def get_queryset(self):
         category = Category.objects.get(name=self.kwargs['category'])
+        #queryset = Post.objects.order_by('-created_data').filter(category=category)
+        queryset = Post.objects.order_by('-id').filter(category=category)
+        return queryset
 
+    # アクセスされた値を取得し辞書に格納
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
         context['category_key'] = self.kwargs['category']
