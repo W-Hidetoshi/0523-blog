@@ -14,7 +14,8 @@ from django.contrib import messages #検索結果のメッセージ
 class IndexView(ListView):
     model = Post
     template_name = 'blog/post_contents_list.html'
-    
+    paginate_by = 5   #ページング件数
+     
     def get_queryset(self):
         #queryset = Post.objects.order_by('-created_date')
         queryset = Post.objects.order_by('-id')
@@ -23,7 +24,8 @@ class IndexView(ListView):
 # カテゴリー一覧    
 class CategoryView(ListView):
     model = Post
-    template_name = 'blog/post_contents_list.html'    
+    template_name = 'blog/post_contents_list.html' 
+    paginate_by = 5   #ページング件数 
     
     def get_queryset(self):
         category = Category.objects.get(name=self.kwargs['category'])
