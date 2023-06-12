@@ -37,7 +37,7 @@ class CategoryView(ListView):
         context['category_key'] = self.kwargs['category']
         return context
 
-'''
+
 class PostListView(ListView):
     context_object_name='post_list' #状態名
     queryset = Post.objects.order_by('-created_date')
@@ -60,7 +60,7 @@ class PostListView(ListView):
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         
         return queryset
-    
+'''    
 class ContentsView(ListView):
     model = Category 
     template_name = 'blog/post_contents_list.html'
