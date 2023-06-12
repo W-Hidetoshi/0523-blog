@@ -3,11 +3,38 @@
 {% extends 'blog/base.html' %}
 
 {% block content%}
-    <h1>{{ category.name  }}</h1>
-    {{ category.post_set.all }}
-
-    {% for obj in category.post_set.all %}
-        {{ obj.title }}
+<div>
+   <h3>カテゴリー</h3>
+   {% for category in category_list %}
+        <a href="{% url 'category' category %}">
+            <p style='float:left; margin-right: 5px'>
+                {{ category.name }}
+            </p>
+        </a>
     {% endfor %}
+</div>
+<br>
 
+<!-- 上記のfloatスタイルの影響を受けないようにしている(clear) -->
+<h1 style="clear:both;">一覧</h1>
+{% if category_key %}
+    <h3>カテゴリー：{{ category_key }}</h3>
+{% endif %}
+
+{% for post in post_list %}
+
+
+
+
+
+    <ul>
+        <li>
+            {{ post.published_date }}
+            {{ post.category }}
+            {{ post.title }}
+            {{ post.text | linebreaksbr }}
+            Comments:{{ obj.approved_comments.count }}
+        </li>
+    </ul>
+{% endfor %}
 {% endblock %}
