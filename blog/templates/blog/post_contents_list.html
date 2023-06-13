@@ -3,20 +3,20 @@
 {% extends 'blog/base.html' %}
 
 {% block content%}
-{% comment %}
 <div>
    <h3>カテゴリー</h3>
    <!--全カテゴリーリストを表示し、列挙する -->
    {% for category in category_list %}
         <a href="{% url 'category' category %}">
-            <p style='float:left; margin-right: 5px'>
+            <p style='float:left; margin-right: 10px'>
                 {{ category.name }}
             </p>
         </a>
     {% endfor %}
-</div>
-<br>
-{% endcomment %}
+
+  <br>
+  </div>
+  <br>
 <br>
 <!-- 上記のfloatスタイルの影響を受けないようにしている(clear) -->
 <h1 style="clear:both;">カテゴリ別　記事一覧</h1>
