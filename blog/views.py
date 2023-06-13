@@ -3,13 +3,42 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render,get_object_or_404,redirect
 from django.utils import timezone
-from .models import Post,Comment
+from .models import Post,Comment,Category
 from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
 from django.views.generic import ListView #検索およびページネーションを行うListView
 from django.db.models import Q #get_queryset()用の関数
 from django.contrib import messages #検索結果のメッセージ
+
+class IndexView(ListView):
+    model = Post
+    template_name = 'blog/post_contents_list.html'
+    paginate_by = 5   #ページング件数
+     
+    def get_queryset(self):
+        #queryset = Post.objects.order_by('-created_date')
+        queryset = Post.objects.order_by('-id')
+        return queryset
+    
+# カテゴリー一覧    
+class CategoryView(ListView):
+    model = Post
+    template_name = 'blog/post_contents_list.html' 
+    paginate_by = 5   #ページング件数 
+    
+    def get_queryset(self):
+        category = Category.objects.get(name=self.kwargs['category'])
+        #queryset = Post.objects.order_by('-created_data').filter(category=category)
+        queryset = Post.objects.order_by('-id').filter(category=category)
+        return queryset
+
+    # アクセスされた値を取得し辞書に格納
+    def get_context_data(self,**kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_key'] = self.kwargs['category']
+        return context
+
 
 class PostListView(ListView):
     context_object_name='post_list' #状態名
@@ -33,10 +62,15 @@ class PostListView(ListView):
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         
         return queryset
+'''    
+class ContentsView(ListView):
+    model = Category 
+    template_name = 'blog/post_contents_list.html'
 
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
     return render(request,'blog/post_list.html',{'posts':posts})
+'''
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
 #新規記事投稿

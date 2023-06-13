@@ -20,10 +20,11 @@ class Post(models.Model):
     published_date = models.DateTimeField(blank=True, null = True)
     
     #追加部分
+     
     category = models.ForeignKey(
-        Category,on_delete=models.PROTECT
+        Category,
+        on_delete=models.PROTECT,     
     )
-    
     
     def publish(self):
         self.published_date = timezone.now()

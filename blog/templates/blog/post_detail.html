@@ -7,7 +7,7 @@
             <div class="date">
                 {{ post.published_date }} <!--ブラウザ上に日付を表示-->
                 <div class="category">
-                    カテゴリー：{{ post.category }}
+                    <a href="{% url 'category' post.category %}">カテゴリー：{{ post.category }}</a>
                 </div>
             </div>
         {% else %}<!--ない場合は[publish]ボタンの表示-->

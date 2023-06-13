@@ -12,6 +12,9 @@
         </form>
         <br>
     </div> 
+    <!--以下は追加-->
+   <!--<a href="{% url 'category' 'blog' %}">カテゴリーごとに並び替え</a> --> 
+
 
     <!--検索結果を表示-->
     {% if messages %}
@@ -36,7 +39,7 @@
        <div class="date">
            {{ obj.published_date }}      
            <div class="category">
-            カテゴリー:{{ obj.category }}
+            <a href="{% url 'category' obj.category %}">カテゴリー:{{ obj.category }}</a>
            </div>
        </div>
        {% comment %}

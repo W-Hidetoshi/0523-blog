@@ -1,0 +1,79 @@
+<!-- コンテンツの内容で絞り込んだ後のページ-->
+<!-- post_contents_list.html -->
+{% extends 'blog/base.html' %}
+
+{% block content%}
+<div>
+   <h3>カテゴリー</h3>
+   <!--全カテゴリーリストを表示し、列挙する -->
+   {% for category in category_list %}
+        <a href="{% url 'category' category %}">
+            <p style='float:left; margin-right: 10px'>
+                {{ category.name }}
+            </p>
+        </a>
+    {% endfor %}
+
+  <br>
+  </div>
+  <br>
+<br>
+<!-- 上記のfloatスタイルの影響を受けないようにしている(clear) -->
+<h1 style="clear:both;">カテゴリ別　記事一覧</h1>
+<!-- 選択されたカテゴリ名の名前が表示される-->
+
+{% if category_key %}
+    <h3>カテゴリー：{{ category_key }}</h3>
+{% endif %}
+<hr>
+<!--ページネーションを行いながら該当する記事を表示する-->
+{% for obj in page_obj %}
+    <div class="post">
+        <div class="date">  
+            {{ obj.published_date }}
+            <div class="category">カテゴリー：{{ obj.category }}</div>
+        </div>
+    <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>        
+    <p>{{ obj.text | linebreaksbr }}</p>
+        <a href="{% url 'post_detail' pk=obj.pk %}">
+            Comments:{{ obj.approved_comments.count }}
+        </a>    
+    </div>
+{% endfor %}
+<!--以下はページネーション-->
+<nav aria-label="Page navigation">
+    <ul class="pagination text-center">
+      <!--前のページがある場合 -->
+      {% if page_obj.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">前へ</span>
+          </a>
+        </li>
+      {% endif %}
+      <!--ページ内のオブジェクト、1ページ内の表示件数があるだけループ繰り返し-->
+      {% for page_num in page_obj.paginator.page_range %}
+            {% if page_num %}
+                {% if page_num == page_obj.number %}
+                    <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">{{ page_num }}</div></li>
+                {% else %}
+                    <li><a class="page-link text-primary d-inline-block" href="?page={{ page_num }}{% if request.GET.query %}&query={{ request.GET.query }}{% endif %}">{{ page_num }}</a></li>
+                {% endif %}
+            {% else %}
+                <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted" href="#">・・・</a></li>
+            {% endif %}
+        {% endfor %}
+      <!-- 次のページがある場合-->
+      {% if page_obj.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">次へ</span>
+          </a>
+        </li>
+      {% endif %}
+    </ul>
+  </nav>
+
+{% endblock %}
