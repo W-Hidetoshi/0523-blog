@@ -14,7 +14,7 @@
     </div> 
     <!--以下は追加-->
    <!--<a href="{% url 'category' 'blog' %}">カテゴリーごとに並び替え</a> --> 
-
+    
 
     <!--検索結果を表示-->
     {% if messages %}
@@ -32,7 +32,12 @@
             {% endif %}
             {% endfor %}
         </ul>
-    {% endif %}    
+    {% endif %} 
+    
+    <!--カテゴリ絞り込みを行うときに表示-->
+    {% if category_key %}
+      <h3>カテゴリー：{{ category_key }}</h3>
+    {% endif %}
     
     {% for obj in page_obj %}
     <div class="post">
