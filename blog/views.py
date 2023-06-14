@@ -22,7 +22,7 @@ class IndexView(ListView):
         return queryset
 '''    
 # カテゴリー一覧
-'''    
+   
 class CategoryView(ListView):
     model = Post
     template_name = 'blog/post_contents_list.html' 
@@ -36,11 +36,12 @@ class CategoryView(ListView):
 
     # アクセスされた値を取得し辞書に格納
     def get_context_data(self,**kwargs):
+        print(self.kwargs)
         context = super().get_context_data(**kwargs)
         context['category_key'] = self.kwargs['category']
         return context
-'''
 
+'''
 class PostListView(ListView):
     # context_object_name='post_list' #状態名
     # queryset = Post.objects.order_by('-created_date')
@@ -80,6 +81,7 @@ class PostListView(ListView):
         context = super().get_context_data(**kwargs)
         context['category_key'] = self.kwargs['category']
         return context    
+'''
 '''
 def post_list(request):
     posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
