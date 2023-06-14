@@ -20,12 +20,13 @@ class IndexView(ListView):
         #queryset = Post.objects.order_by('-created_date')
         queryset = Post.objects.order_by('-id')
         return queryset
+'''
 '''    
-# カテゴリー一覧
-   
+# カテゴリー一覧   
 class CategoryView(ListView):
     model = Post
     template_name = 'blog/post_contents_list.html' 
+    #template_name = 'blog/post_list.html'
     paginate_by = 5   #ページング件数 
     
     def get_queryset(self):
@@ -40,8 +41,8 @@ class CategoryView(ListView):
         context = super().get_context_data(**kwargs)
         context['category_key'] = self.kwargs['category']
         return context
-
 '''
+
 class PostListView(ListView):
     # context_object_name='post_list' #状態名
     # queryset = Post.objects.order_by('-created_date')
@@ -50,16 +51,17 @@ class PostListView(ListView):
     model = Post
     
     def get_queryset(self, **kwargs):
-        category_name = kwargs.get('category',None)
-        if category_name == None:
-            queryset = Post.objects.order_by('-created_date')
+        category_name = self.kwargs.get('category')
+        print(category_name) 
+        if category_name == 'categoty': 
             
-        else:
             category = Category.objects.get(name=self.kwargs['category'])
             queryset = Post.objects.order_by('-created_date').filter(category=category)
+            #return queryset
         
-            return queryset
-        
+        else:
+            queryset = Post.objects.order_by('-created_date')
+    
         #queryset = Post.objects.order_by('-created_date')
         
         query = self.request.GET.get('query')
@@ -79,14 +81,18 @@ class PostListView(ListView):
     # アクセスされた値を取得し辞書に格納
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs)
-        context['category_key'] = self.kwargs['category']
+        category_name = self.kwargs.get('category',None)
+        
+        print(category_name)
+        
+        if category_name == 'category':  
+            context['category_key'] = self.kwargs['category']
+        else:
+            pass
+        
+        #context['category_key'] = self.kwargs['category']
         return context    
-'''
-'''
-def post_list(request):
-    posts = Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
-    return render(request,'blog/post_list.html',{'posts':posts})
-'''
+
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
 #新規記事投稿
