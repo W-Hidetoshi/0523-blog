@@ -44,7 +44,7 @@ class CategoryView(ListView):
 '''
 
 class PostListView(ListView):
-    # context_object_name='post_list' #状態名
+    context_object_name='post_list' #状態名
     # queryset = Post.objects.order_by('-created_date')
     template_name = 'blog/post_list.html'
     paginate_by = 5   #1ページに何件のレコードを表示させるか
@@ -52,9 +52,12 @@ class PostListView(ListView):
     
     def get_queryset(self, **kwargs):
         category_name = self.kwargs.get('category')
-        print(category_name) 
-        if category_name == 'categoty': 
-            
+        print(category_name)
+        print(self.kwargs.get('category'))
+        print('category')
+        
+        if category_name == self.kwargs.get('category'):   # if category_name == 'category'  
+            print(category_name)
             category = Category.objects.get(name=self.kwargs['category'])
             queryset = Post.objects.order_by('-created_date').filter(category=category)
             #return queryset
@@ -85,7 +88,8 @@ class PostListView(ListView):
         
         print(category_name)
         
-        if category_name == 'category':  
+        if category_name == 'category':  #if category_name == 'category'  # if category_name == self.kwargs.get('category')
+            print(category_name) 
             context['category_key'] = self.kwargs['category']
         else:
             pass
