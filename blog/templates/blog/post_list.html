@@ -18,16 +18,18 @@
 
     <!--検索結果を表示-->
     {% if messages %}
-        <ul class="messages">
-
+        <ul class="messages" style="list-style:none;">
+          
             {% for message in messages %}
                 {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
                 <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    <h2>{{ message }}</h2>
+                    <div class="alert alert-danger" role="alert">
+                       <h2>{{ message }}</h2> 
+                    </div>
                 </li>
                 {% else %}
                 <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    <h2>"{{ message }}"を含む検索結果：</h2>
+                    <div class="alert alert-primary" role="alert"><h2>"{{ message }}"を含む検索結果：</h2></div>    
                 </li>
             {% endif %}
             {% endfor %}
