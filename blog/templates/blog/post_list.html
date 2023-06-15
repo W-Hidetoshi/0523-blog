@@ -29,7 +29,8 @@
                 </li>
                 {% else %}
                 <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    <div class="alert alert-primary" role="alert"><h2>"{{ message }}"を含む検索結果：</h2></div>    
+                    <div class="alert alert-primary" role="alert"><h2>"{{ message }}"を含む検索結果：</h2>
+                    </div>    
                 </li>
             {% endif %}
             {% endfor %}
@@ -41,8 +42,17 @@
     <div class="alert alert-success" role="alert">
       カテゴリ別記事表示<br>
       <h3>カテゴリー：{{ category_key }}</h3>
-    </div>
-    {% endif %}
+      <hr>
+      {% for category in category_list %}
+        <a href="{% url 'category' category %}">
+            <p style='float:left; margin-right: 10px'>
+                {{ category.name }}
+            </p>
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div> 
+    
     
     {% for obj in page_obj %}
     <div class="post">
