@@ -51,18 +51,18 @@ class PostListView(ListView):
     model = Post
     
     def get_queryset(self, **kwargs):
-        category_name = self.kwargs.get('category',None)
-        print(category_name)  
-        print(self.kwargs.get('category')) 
+        category_name = self.kwargs.get('category',None)   #URLのパラメータを辞書型でgetし、category_nameへ代入
+        queryset = Post.objects.order_by('-created_date')
         
-        if category_name == None:
-            queryset = Post.objects.order_by('-created_date')
+        if category_name is not None:
+            category = Category.objects.get(name=category_name)
+            queryset = queryset.filter(category=category)
+            #queryset = Post.objects.order_by('-created_date')
             
-        elif category_name == self.kwargs.get('category'):
-            print(category_name)
-            category = Category.objects.get(name=self.kwargs['category'])
-            queryset = Post.objects.order_by('-created_date').filter(category=category)
-            #return queryset
+        else:   #category_name is Noneのとき
+            pass 
+            #category = Category.objects.get(name=category_name)
+            #queryset = Post.objects.order_by('-created_date').filter(category=category)
         
        
         #queryset = Post.objects.order_by('-created_date')
@@ -87,13 +87,18 @@ class PostListView(ListView):
         category_name = self.kwargs.get('category',None)
         
         print(category_name)
+        if category_name is not None:
+            context['category_key'] = self.kwargs['category']
+        else:
+            pass 
         
-        if category_name==None:
+        '''
+        if category_name == None:
             pass
         elif category_name == self.kwargs.get('category'):
             print(category_name) 
             context['category_key'] = self.kwargs['category']
-        
+        '''
         return context    
 
 
