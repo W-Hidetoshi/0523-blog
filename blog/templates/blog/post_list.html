@@ -36,7 +36,10 @@
     
     <!--カテゴリ絞り込みを行うときに表示-->
     {% if category_key %}
+    <div class="alert alert-success" role="alert">
+      カテゴリ別記事表示<br>
       <h3>カテゴリー：{{ category_key }}</h3>
+    </div>
     {% endif %}
     
     {% for obj in page_obj %}
