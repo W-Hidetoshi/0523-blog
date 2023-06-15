@@ -51,11 +51,20 @@ class PostListView(ListView):
     model = Post
     
     def get_queryset(self, **kwargs):
-        category_name = self.kwargs.get('category')
-        print(category_name)
-        print(self.kwargs.get('category'))
-        print('category')
+        category_name = self.kwargs.get('category',None)
+        print(category_name)  
+        print(self.kwargs.get('category')) 
         
+        if category_name == None:
+            queryset = Post.objects.order_by('-created_date')
+            
+        elif category_name == self.kwargs.get('category'):
+            print(category_name)
+            category = Category.objects.get(name=self.kwargs['category'])
+            queryset = Post.objects.order_by('-created_date').filter(category=category)
+            #return queryset
+        
+        '''
         if category_name == self.kwargs.get('category'):   # if category_name == 'category'  
             print(category_name)
             category = Category.objects.get(name=self.kwargs['category'])
@@ -64,7 +73,7 @@ class PostListView(ListView):
         
         else:
             queryset = Post.objects.order_by('-created_date')
-    
+        '''
         #queryset = Post.objects.order_by('-created_date')
         
         query = self.request.GET.get('query')
@@ -88,6 +97,13 @@ class PostListView(ListView):
         
         print(category_name)
         
+        if category_name==None:
+            pass
+        elif category_name == self.kwargs.get('category'):
+            print(category_name) 
+            context['category_key'] = self.kwargs['category']
+        
+        '''
         if category_name == 'category':  #if category_name == 'category'  # if category_name == self.kwargs.get('category')
             print(category_name) 
             context['category_key'] = self.kwargs['category']
@@ -95,6 +111,7 @@ class PostListView(ListView):
             pass
         
         #context['category_key'] = self.kwargs['category']
+        '''
         return context    
 
 
