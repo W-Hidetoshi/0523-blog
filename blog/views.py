@@ -52,11 +52,11 @@ class PostListView(ListView):
     
     def get_queryset(self, **kwargs):
         category_name = self.kwargs.get('category',None)   #URLのパラメータを辞書型でgetし、category_nameへ代入
-        queryset = Post.objects.order_by('-created_date')
+        queryset = Post.objects.order_by('-created_date')  #作成日時を降順に並べ替えてソートする -#1
         
         if category_name is not None:
-            category = Category.objects.get(name=category_name)
-            queryset = queryset.filter(category=category)
+            category = Category.objects.get(name=category_name)  # [カテゴリテーブル]からURLのパラメータを条件にフィルタリング
+            queryset = queryset.filter(category=category)        # #1に「カテゴリー名」でフィルタをかける
             #queryset = Post.objects.order_by('-created_date')
             
         else:   #category_name is Noneのとき
