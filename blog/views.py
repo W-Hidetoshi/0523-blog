@@ -52,11 +52,16 @@ class PostListView(ListView):
     
     def get_queryset(self, **kwargs):
         category_name = self.kwargs.get('category',None)   #URLのパラメータを辞書型でgetし、category_nameへ代入
+        #print(category_name)
         queryset = Post.objects.order_by('-created_date')  #作成日時を降順に並べ替えてソートする -#1
         
+        
         if category_name is not None:
-            category = Category.objects.get(name=category_name)  # [カテゴリテーブル]からURLのパラメータを条件にフィルタリング
-            queryset = queryset.filter(category=category)        # #1に「カテゴリー名」でフィルタをかける
+            #categoryobj = Category.objects.get(name=category_name)  # [カテゴリテーブル]からURLのパラメータを条件にフィルタリング
+            #queryset = queryset.filter(category=category)        # #1に「カテゴリー名」でフィルタをかける
+            #queryset = Post.objects.select_related('category').filter(category_id=1)
+            queryset = queryset.filter(category__name = category_name)  #少なくとも1つ以上の'category_name'を持つカテゴリ記事の情報をクエリする
+            #queryset = Post.objects.select_related('category').filter(category__isnull = True)
             #queryset = Post.objects.order_by('-created_date')
             
         else:   #category_name is Noneのとき
@@ -86,7 +91,7 @@ class PostListView(ListView):
         context = super().get_context_data(**kwargs)
         category_name = self.kwargs.get('category',None)
         
-        print(category_name)
+        #print(category_name)
         if category_name is not None:
             context['category_key'] = self.kwargs['category']
         else:
