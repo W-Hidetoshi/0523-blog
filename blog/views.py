@@ -54,7 +54,7 @@ class PostListView(ListView):
         category_name = self.kwargs.get('category',None)   #URLのパラメータを辞書型でgetし、category_nameへ代入
         queryset = Post.objects.order_by('-created_date')  #作成日時を降順に並べ替えてソートする -#1
         
-        print(queryset.query)
+        #print(queryset.query)
         if category_name is not None:
             #categoryobj = Category.objects.get(name=category_name)  # [カテゴリテーブル]からURLのパラメータを条件にフィルタリング
             #queryset = queryset.filter(category=category)        # #1に「カテゴリー名」でフィルタをかける
@@ -67,7 +67,7 @@ class PostListView(ListView):
             pass 
             #category = Category.objects.get(name=category_name)
             #queryset = Post.objects.order_by('-created_date').filter(category=category)
-        print(queryset.query)
+        #print(queryset.query)
        
         #queryset = Post.objects.order_by('-created_date')
         
@@ -82,20 +82,19 @@ class PostListView(ListView):
                 #messages.error(self.request,'100文字以内で入力してください。')
             else :
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
-        print(queryset.query)
+        #print(queryset.query)
         return queryset
         
     # アクセスされた値を取得し辞書に格納
     def get_context_data(self,**kwargs):
-        context = super().get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs) 
+        print(context)
+        context['category_list'] = Category.objects.all()
+        
         category_name = self.kwargs.get('category',None)
-        
-        
-        if category_name is not None:
+        if category_name:
             context['category_key'] = self.kwargs['category']
-        else:
-            pass 
-        
+            
         '''
         if category_name == None:
             pass
