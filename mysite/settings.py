@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,29 @@ SECRET_KEY = 'django-insecure-q3$5(^(473o^8nc2eujmug3g_)s5j%uv1sohf)c&=2d@$ou7om
 DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','[::1]']
+
+
+#追加 ログ出力
+LOGGING ={
+    'version' : 1,
+    'disable_existing_loggers':False,
+    'handlers':{
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+        },
+    },
+    'loggers':{
+        'django.db.backends':{
+            'handlers':['console'],
+            'level':'DEBUG',
+        },
+    },
+}
+
+
+
+
 
 
 # Application definition
@@ -64,7 +88,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'blog.context.related',  #追加
+                #'blog.context.related',  
             ],
         },
     },
