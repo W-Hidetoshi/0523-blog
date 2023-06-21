@@ -53,7 +53,7 @@
         {% endif %}
     </div> 
     
-    
+    {#{% comment %}#}
     {% for obj in page_obj %}
     <div class="post">
        <div class="date">
@@ -62,11 +62,7 @@
             <a href="{% url 'category' obj.category %}">カテゴリー:{{ obj.category }}</a>
            </div>
        </div>
-       {% comment %}
-       <div class="category">
-          {{ obj.category }}
-       </div>
-       {% endcomment %}
+       
        <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
         <p>{{ obj.text| linebreaksbr }}</p>
     </div>
@@ -75,7 +71,8 @@
     </a>
     <br><br>
    {% endfor %} 
-    
+   {#{% endcomment %}#}
+
       {% comment %}
       {% for post in post_list %}
         <div class="post">
@@ -89,7 +86,7 @@
             Comments:{{ post.approved_comments.count }}
         </a>
         {% endfor %}    
-        {% endcomment %}
+       {% endcomment %}
 
     {% comment %}
         {% for post in posts %}
