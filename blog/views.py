@@ -54,12 +54,15 @@ class PostListView(ListView):
         category_name = self.kwargs.get('category',None)   #URLのパラメータを辞書型でgetし、category_nameへ代入
         queryset = Post.objects.order_by('-created_date')  #作成日時を降順に並べ替えてソートする -#1
         
-        #print(queryset.query)
+        #print(queryset.query)   
+        
         if category_name:
             #categoryobj = Category.objects.get(name=category_name)  # [カテゴリテーブル]からURLのパラメータを条件にフィルタリング
             #queryset = queryset.filter(category=category)        # #1に「カテゴリー名」でフィルタをかける
             #queryset = Post.objects.select_related('category').filter(category_id=1)
+            
             queryset = queryset.filter(category__name = category_name)  #少なくとも1つ以上の'category_name'を持つカテゴリ記事の情報をクエリする
+            
             #queryset = Post.objects.select_related('category').filter(category__isnull = True)
             #queryset = Post.objects.order_by('-created_date')
             
@@ -88,9 +91,12 @@ class PostListView(ListView):
     # アクセスされた値を取得し辞書に格納
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs) 
-        #print("Context1:",context)
-        context['category_list'] = Category.objects.all()
-        
+        print("Context1:",context)
+        context['category_list'] = Category.objects.all()  #カテゴリー一覧を表示する
+        context['category_name'] = Category.objects.select_related()
+        #context['category_list_name'] = Category.objects.select_related('category.n')
+        print("Context2",context['category_name'])
+                
         category_name = self.kwargs.get('category',None)
         if category_name:
             context['category_key'] = self.kwargs['category']
