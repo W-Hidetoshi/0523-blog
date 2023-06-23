@@ -44,7 +44,7 @@
       <h3>カテゴリー：{{ category_key }}</h3>
       <hr>
       {% for category in category_list %}
-        <a href="{% url 'category' category %}">
+        <a href="{% url 'category' category.name %}">
             <p style='float:left; margin-right: 10px'>
                 {{ category.name }}
             </p>
@@ -54,23 +54,25 @@
     </div> 
     
     {#{% comment %}#}
-    {% for obj in page_obj %}
+    {% for post in page_obj %} 
+      
     <div class="post">
        <div class="date">
-           {{ obj.published_date }}      
+           {{ post.published_date }}      
            <div class="category">
-            <a href="{% url 'category' obj.category %}">カテゴリー:{{ obj.category }}</a>
+            <a href="{% url 'category' post.category.name %}">カテゴリー:{{ post.category.name }}</a>
            </div>
        </div>
        
-       <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
-        <p>{{ obj.text| linebreaksbr }}</p>
+       <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        <p>{{ post.text| linebreaksbr }}</p>
     </div>
-    <a href="{% url 'post_detail' pk=obj.pk %}">
-       Comments:{{ obj.approved_comments.count }}
+    <a href="{% url 'post_detail' pk=post.pk %}">
+       Comments:{{ post.approved_comments.count }}
     </a>
     <br><br>
-   {% endfor %} 
+    {% endfor %} 
+
    {#{% endcomment %}#}
 
       {% comment %}
