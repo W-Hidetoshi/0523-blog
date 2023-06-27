@@ -95,7 +95,7 @@ class PostListView(ListView):
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs) 
         print("Context1:",context)
-        context['category_list'] = Category.objects.all()  #カテゴリー一覧を表示する
+        context['category_list'] = Category.objects.all()  #カテゴリー一覧をcontext['category_list']へデータを格納
         #context['category_name'] = Category.objects.select_related()
         print("Context2",context)
         
