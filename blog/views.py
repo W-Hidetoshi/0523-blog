@@ -47,7 +47,7 @@ class PostListView(ListView):
     context_object_name='post_list' #状態名
     # queryset = Post.objects.order_by('-created_date')
     template_name = 'blog/post_list.html'
-    paginate_by = 5   #1ページに何件のレコードを表示させるか
+    paginate_by = 5   #1ページに何件のレコードを表示させるか   
     model = Post
     
     def get_queryset(self, **kwargs):
@@ -62,9 +62,9 @@ class PostListView(ListView):
             #queryset = Post.objects.select_related('category').filter(category_id=1)
             
             queryset = queryset.filter(category__name = category_name)  #少なくとも1つ以上の'category_name'を持つカテゴリ記事の情報をクエリする
-            print(category_name)
-            queryset = queryset.select_related('category')
-            print("queryset2:",queryset.query)
+            #print(category_name)
+            queryset = queryset.select_related('category')  
+            #print("queryset2:",queryset.query)
             
             #queryset = Post.objects.select_related('category').filter(category__isnull = True)
             #queryset = Post.objects.order_by('-created_date')
@@ -73,7 +73,7 @@ class PostListView(ListView):
             pass 
             #category = Category.objects.get(name=category_name)
             #queryset = Post.objects.order_by('-created_date').filter(category=category)
-        print(queryset.query)
+        #print(queryset.query)
        
         #queryset = Post.objects.order_by('-created_date')
         
@@ -94,17 +94,17 @@ class PostListView(ListView):
     # アクセスされた値を取得し辞書に格納
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs) 
-        #print("Context1:",context)
+        print("Context1:",context)
         context['category_list'] = Category.objects.all()  #カテゴリー一覧を表示する
         #context['category_name'] = Category.objects.select_related()
-        #print("Context2",context)
+        print("Context2",context)
         
                 
         category_name = self.kwargs.get('category',None)
         if category_name:
             context['category_key'] = self.kwargs['category']
-            #print("Context2:",context) 
-            #print("Context3:",context)
+            print("Context3:",context) 
+            print("Context4:",context)
         
         
         
