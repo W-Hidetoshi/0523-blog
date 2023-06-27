@@ -97,14 +97,13 @@ class PostListView(ListView):
         print("Context1:",context)
         context['category_list'] = Category.objects.all()  #カテゴリー一覧をcontext['category_list']へデータを格納
         #context['category_name'] = Category.objects.select_related()
-        print("Context2",context)
+        print("Context2:",context) #カテゴリー一覧を追加したcontextデータ
         
                 
         category_name = self.kwargs.get('category',None)
         if category_name:
             context['category_key'] = self.kwargs['category']
             print("Context3:",context) 
-            print("Context4:",context)
         
         
         
