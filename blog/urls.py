@@ -18,7 +18,7 @@ urlpatterns=[
     path('category/<str:category>/',views.PostListView.as_view(),name='category'),
     #path('category/<str:category>/',views.CategoryView.as_view(),name='category'),
 ]
-
+# 記事編集用
 def post_edit(request,pk):
     post = get_object_or_404(Post,pk=pk)
     if request.method == "POST":
