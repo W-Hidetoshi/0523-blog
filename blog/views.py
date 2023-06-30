@@ -54,8 +54,6 @@ class PostListView(ListView):
         category_name = self.kwargs.get('category',None)   #URLのパラメータを辞書型でgetし、category_nameへ代入
         queryset = Post.objects.order_by('-created_date')  #作成日時を降順に並べ替えてソートする -#1
         #queryset_1 = Post.objects.order_by('-created_date')
-        #queryset_2 = Comment.objects.all()
-        #queryset_3 = queryset_1.union(queryset_2)
         
         
         #print(queryset.query)   
@@ -63,13 +61,10 @@ class PostListView(ListView):
         if category_name:
             #categoryobj = Category.objects.get(name=category_name)  # [カテゴリテーブル]からURLのパラメータを条件にフィルタリング
             #queryset = queryset.filter(category=category)        # #1に「カテゴリー名」でフィルタをかける
-            #queryset = Post.objects.select_related('category').filter(category_id=1)
-            #queryset_3 = queryset_3.filter(category__name = category_name)
+            
             queryset = queryset.filter(category__name = category_name)  #少なくとも1つ以上の'category_name'を持つカテゴリ記事の情報をクエリする
             #print(category_name)
-            #queryset_3 = queryset_3.select_related('category','comments')
-            queryset = queryset.select_related('category')  
-            #print("queryset2:",queryset.query)
+            queryset = queryset.select_related('category','comments')  
             
             #queryset = Post.objects.select_related('category').filter(category__isnull = True)
             #queryset = Post.objects.order_by('-created_date')
