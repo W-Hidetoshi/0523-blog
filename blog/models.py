@@ -26,6 +26,7 @@ class Post(models.Model):
         on_delete=models.PROTECT,     
     )
     
+
     def publish(self):
         self.published_date = timezone.now()
         self.save()
