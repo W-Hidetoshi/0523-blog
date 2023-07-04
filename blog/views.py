@@ -8,8 +8,9 @@ from .forms import PostForm,CommentForm
 #↑　from .form import PostFormはカレントディレクトリ内にあるform.pyからimportするという意味
 #ここで、"."は"/"の意味。
 from django.views.generic import ListView #検索およびページネーションを行うListView
-from django.db.models import Q #get_queryset()用の関数
+from django.db.models import Q ,Count #Q:get_queryset()用の関数 Count:カウント用の関数
 from django.contrib import messages #検索結果のメッセージ
+from django.http import HttpResponse
 '''
 class IndexView(ListView):
     model = Post
@@ -64,7 +65,7 @@ class PostListView(ListView):
             
             queryset = queryset.filter(category__name = category_name)  #少なくとも1つ以上の'category_name'を持つカテゴリ記事の情報をクエリする
             #print(category_name)
-            queryset = queryset.select_related('category','comments')  
+            queryset = queryset.select_related('category')  
             
             #queryset = Post.objects.select_related('category').filter(category__isnull = True)
             #queryset = Post.objects.order_by('-created_date')
@@ -74,7 +75,8 @@ class PostListView(ListView):
             #category = Category.objects.get(name=category_name)
             #queryset = Post.objects.order_by('-created_date').filter(category=category)
         #print(queryset.query)
-       
+            
+        
         #queryset = Post.objects.order_by('-created_date')
         
         query = self.request.GET.get('query')
@@ -88,6 +90,7 @@ class PostListView(ListView):
                 #messages.error(self.request,'100文字以内で入力してください。')
             else :
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
+        queryset = queryset.annotate(cnt=Count('comments')).filter(Q(comments__approved_comment=1)|Q(comments__approved_comment=None))
         #print(queryset.query)
         return queryset
         
@@ -104,8 +107,6 @@ class PostListView(ListView):
             context['category_key'] = self.kwargs['category']
             #print("Context3:",context) 
         
-        
-        
         '''
         if category_name == None:
             pass
@@ -113,10 +114,17 @@ class PostListView(ListView):
             print(category_name) 
             context['category_key'] = self.kwargs['category']
         '''
-        #print("Context:",context)
-        
-        return context    
 
+        return context      
+    '''
+    def comments_cnt(request):
+        #annotated_count=Post.objects.annotate(n_of_comments=Count('comments'))
+        annotated_count=Comment.objects.annotate(n_of_comments=Count('comments'))
+        print(annotated_count[0].n_of_comments)
+        
+        return HttpResponse('')
+    '''
+    
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
 #新規記事投稿
