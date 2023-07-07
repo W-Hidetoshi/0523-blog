@@ -12,10 +12,7 @@
         </form>
         <br>
     </div> 
-    <!--以下は追加-->
-   <!--<a href="{% url 'category' 'blog' %}">カテゴリーごとに並び替え</a> --> 
-    
-
+ 
     <!--検索結果を表示-->
     {% if messages %}
         <ul class="messages" style="list-style:none;">
@@ -101,8 +98,7 @@
             <a href="{% url 'post_detail' pk=post.pk %}">
                 Comments:{{ post.approved_comments.count }}
             </a>
-            <!--<a href="<div data-gb-custom-block data-tag="url" data-0='post_detail'></div>
-            ">Comments: {{ post.comments.count }}</a>-->
+            
             {% endfor %}
     {% endcomment %}
         
