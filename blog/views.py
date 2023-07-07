@@ -10,7 +10,7 @@ from .forms import PostForm,CommentForm
 from django.views.generic import ListView #検索およびページネーションを行うListView
 from django.db.models import Q ,Count #Q:get_queryset()用の関数 Count:カウント用の関数
 from django.contrib import messages #検索結果のメッセージ
-from django.http import HttpResponse
+
 '''
 class IndexView(ListView):
     model = Post
@@ -90,8 +90,9 @@ class PostListView(ListView):
                 #messages.error(self.request,'100文字以内で入力してください。')
             else :
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
-        queryset = queryset.annotate(cnt=Count('comments')).filter(Q(comments__approved_comment=1)|Q(comments__approved_comment=None))
-        #print(queryset.query)
+        #queryset = queryset.annotate(cnt=Count('comments__id')).filter(Q(comments__approved_comment=1)|Q(comments__approved_comment=None))
+        queryset = queryset.annotate(cnt=Count('comments__id',filter=(Q(comments__approved_comment=1)|Q(comments__approved_comment=None))))
+        print(queryset.query)
         return queryset
         
     # アクセスされた値を取得し辞書に格納
@@ -116,14 +117,7 @@ class PostListView(ListView):
         '''
 
         return context      
-    '''
-    def comments_cnt(request):
-        #annotated_count=Post.objects.annotate(n_of_comments=Count('comments'))
-        annotated_count=Comment.objects.annotate(n_of_comments=Count('comments'))
-        print(annotated_count[0].n_of_comments)
-        
-        return HttpResponse('')
-    '''
+    
     
 
 @login_required  #login_required：ログイン後に操作ができる関数（以降同様）
