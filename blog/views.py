@@ -91,8 +91,8 @@ class PostListView(ListView):
             else :
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         #queryset = queryset.annotate(cnt=Count('comments__id')).filter(Q(comments__approved_comment=1)|Q(comments__approved_comment=None))
-        queryset = queryset.annotate(cnt=Count('comments__id',filter=(Q(comments__approved_comment=1)|Q(comments__approved_comment=None))))
-        print(queryset.query)
+        queryset = queryset.annotate(cnt=Count('comments__id',filter=(Q(comments__approved_comment=1))))#|Q(comments__approved_comment=None))))
+        #print(queryset.query)
         return queryset
         
     # アクセスされた値を取得し辞書に格納
