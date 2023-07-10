@@ -65,7 +65,7 @@ class PostListView(ListView):
             
             queryset = queryset.filter(category__name = category_name)  #少なくとも1つ以上の'category_name'を持つカテゴリ記事の情報をクエリする
             #print(category_name)
-            queryset = queryset.select_related('category')  
+            #queryset = queryset.select_related('category')  #1114
             
             #queryset = Post.objects.select_related('category').filter(category__isnull = True)
             #queryset = Post.objects.order_by('-created_date')
@@ -74,8 +74,8 @@ class PostListView(ListView):
             pass 
             #category = Category.objects.get(name=category_name)
             #queryset = Post.objects.order_by('-created_date').filter(category=category)
-        #print(queryset.query)
-            
+        
+        queryset = queryset.select_related('category')    
         
         #queryset = Post.objects.order_by('-created_date')
         
