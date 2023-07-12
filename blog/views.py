@@ -89,7 +89,6 @@ class PostListView(ListView):
                 #messages.error(self.request,'100文字以内で入力してください。')
             else :
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
-        #queryset = queryset.annotate(cnt=Count('comments__id')).filter(Q(comments__approved_comment=1)|Q(comments__approved_comment=None))
         queryset = queryset.annotate(cnt=Count('comments__id',filter=(Q(comments__approved_comment=1))))#|Q(comments__approved_comment=None))))
         #print(queryset.query)
         return queryset
