@@ -12,50 +12,65 @@
         </form>
         <br>
     </div> 
-    <!--以下は追加-->
-   <!--<a href="{% url 'category' 'blog' %}">カテゴリーごとに並び替え</a> --> 
-
-
+ 
     <!--検索結果を表示-->
     {% if messages %}
-        <ul class="messages">
-
+        <ul class="messages" style="list-style:none;">
+          
             {% for message in messages %}
                 {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
                 <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    <h2>{{ message }}</h2>
+                    <div class="alert alert-danger" role="alert">
+                       <h2>{{ message }}</h2> 
+                    </div>
                 </li>
                 {% else %}
                 <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>
-                    <h2>"{{ message }}"を含む検索結果：</h2>
+                    <div class="alert alert-primary" role="alert"><h2>"{{ message }}"を含む検索結果：</h2>
+                    </div>    
                 </li>
             {% endif %}
             {% endfor %}
         </ul>
-    {% endif %}    
+    {% endif %} 
     
-    {% for obj in page_obj %}
+    <!--カテゴリ絞り込みを行うときに表示-->
+    {% if category_key %}
+    <div class="alert alert-success" role="alert">
+      カテゴリ別記事表示<br>
+      <h3>カテゴリー：{{ category_key }}</h3>
+      <hr>
+      {% for category in category_list %}
+        <a href="{% url 'category' category.name %}">
+            <p style='float:left; margin-right: 10px'>
+                {{ category.name }}
+            </p>
+        </a>
+        {% endfor %}
+        {% endif %}
+    </div> 
+      
+    {% for post in page_obj %} 
+      
     <div class="post">
        <div class="date">
-           {{ obj.published_date }}      
+           {{ post.published_date }}      
            <div class="category">
-            <a href="{% url 'category' obj.category %}">カテゴリー:{{ obj.category }}</a>
+            <a href="{% url 'category' post.category.name %}">カテゴリー:{{ post.category.name }}</a>
            </div>
        </div>
-       {% comment %}
-       <div class="category">
-          {{ obj.category }}
-       </div>
-       {% endcomment %}
-       <h2><a href="{% url 'post_detail' pk=obj.pk %}">{{ obj.title }}</a></h2>
-        <p>{{ obj.text| linebreaksbr }}</p>
+       
+       <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
+        <p>{{ post.text| linebreaksbr }}</p>
     </div>
-    <a href="{% url 'post_detail' pk=obj.pk %}">
-       Comments:{{ obj.approved_comments.count }}
+    <a href="{% url 'post_detail' pk=post.pk %}">
+       <!--Comments:{#{ post.approved_comments.count }#}--> 
+       Comments:{{ post.cnt }}
     </a>
     <br><br>
-   {% endfor %} 
-    
+    {% endfor %} 
+
+
       {% comment %}
       {% for post in post_list %}
         <div class="post">
@@ -69,7 +84,7 @@
             Comments:{{ post.approved_comments.count }}
         </a>
         {% endfor %}    
-        {% endcomment %}
+       {% endcomment %}
 
     {% comment %}
         {% for post in posts %}
@@ -83,8 +98,7 @@
             <a href="{% url 'post_detail' pk=post.pk %}">
                 Comments:{{ post.approved_comments.count }}
             </a>
-            <!--<a href="<div data-gb-custom-block data-tag="url" data-0='post_detail'></div>
-            ">Comments: {{ post.comments.count }}</a>-->
+            
             {% endfor %}
     {% endcomment %}
         

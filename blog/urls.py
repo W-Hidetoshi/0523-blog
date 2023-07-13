@@ -3,7 +3,7 @@ from django.urls import path,re_path,include
 from . import views
 
 urlpatterns=[
-    #path('',views.post_list,name='post_list'),
+    
     path('',views.PostListView.as_view(),name='post_list'),
     path('accounts/',include('django.contrib.auth.urls')),
     path('post/<int:pk>',views.post_detail,name='post_detail'),
@@ -15,10 +15,10 @@ urlpatterns=[
     path('post/<int:pk>/comment/', views.add_comment_to_post, name='add_comment_to_post'),
     path('comment/<int:pk>/approve/', views.comment_approve, name='comment_approve'),
     path('comment/<int:pk>/remove/', views.comment_remove, name='comment_remove'),
-    path('category/<str:category>/',views.CategoryView.as_view(),name='category'),
-    # path('category/<str:category>/',views.CategoryView.as_view(),name='category'),
+    path('category/<str:category>/',views.PostListView.as_view(),name='category'),
+    #path('category/<str:category>/',views.CategoryView.as_view(),name='category'),
 ]
-
+# 記事編集用
 def post_edit(request,pk):
     post = get_object_or_404(Post,pk=pk)
     if request.method == "POST":
