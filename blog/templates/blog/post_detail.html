@@ -14,8 +14,7 @@
         <!--公開ボタン-->
             <button type="button" class="btn btn-outline-primary">
                 <a href="{% url 'post_publish' pk=post.pk %}">Publish</a>
-            </button>
-            <!--<a class="btn btn-default" href="{% url 'post_publish' pk=post.pk %}">Publish</a>-->    
+            </button>    
         {% endif %}
         
  
@@ -23,20 +22,11 @@
             <button type="button" class="btn btn-outline-secondary">
                 <a href="{% url 'post_edit' pk=post.pk %}"><span class ="bi-pencil"></span></a>
             </button>    
-            <!--<a class="btn btn-default" href="{% url 'post_edit' pk=post.pk %}">
-                <span class="glyphicon glyphicon-pencil"></span>
-
-            </a>-->
+            
             <!--削除ボタン-->
             <button type="button" class="btn btn-outline-secondary">
                 <a href="{% url 'post_remove' pk=post.pk %}"><span class="bi-file-earmark-x" alt="elace"></span></a>
             </button>
-            
-           <!-- <a class="btn btn-default" href="{% url 'post_remove' pk=post.pk %}">
-                <span class="glyphicon glyphicon-remove"></span>
-                <span class="bi-file-earmark-x" alt="elace"></span>
-            </a>-->
-
         <h2>{{ post.title }}</h2>
         <p>{{ post.text | linebreaksbr }}</p>
     </div>
@@ -46,7 +36,6 @@
     <button type="button" class="btn btn-outline-secondary">
         <a href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>
     </button>
-    <!--<a class="btn btn-default" href="{% url 'add_comment_to_post' pk=post.pk %}">Add comment</a>-->
     <!-- 当該記事に紐づけられているコメントを全件取得 -->
     {% for comment in post.comments.all %}
         <div class="comment">
@@ -57,16 +46,9 @@
                 <button type="button" class="btn btn-outline-secondary">
                     <a href="{% url 'comment_remove' pk=comment.pk %}"><i class="bi bi-file-x"></i></a>
                 </button>    
-                <!--<a class="btn btn-default" href="{% url 'comment_remove' pk=comment.pk %}">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </a>-->
                 <button type="button" class="btn btn-outline-primary">
                     <a href="{% url 'comment_approve' pk=comment.pk %}"><i class="bi bi-file-check"></i></a>
                 </button>
-                <!--<a class="btn btn-default" href="{% url 'comment_approve' pk=comment.pk %}">
-                    <span class="glyphicon glyphicon-ok"></span>
-                </a>-->
-            <!-- endif -->
             {% endif %}
             
             <!-- endif -->
@@ -76,7 +58,7 @@
             </div>
         
         {% empty %}
-        <!--<div data-gb-custom-block data-tag="empty"> -->
+        
             <p>コメントはありません。</p>
         {% endfor %}
 </div>
