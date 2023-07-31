@@ -11,72 +11,21 @@ from django.views.generic import ListView #検索およびページネーショ�
 from django.db.models import Q ,Count #Q:get_queryset()用の関数 Count:カウント用の関数
 from django.contrib import messages #検索結果のメッセージ
 
-'''
-class IndexView(ListView):
-    model = Post
-    template_name = 'blog/post_contents_list.html'
-    paginate_by = 5   #ページング件数
-     
-    def get_queryset(self):
-        #queryset = Post.objects.order_by('-created_date')
-        queryset = Post.objects.order_by('-id')
-        return queryset
-'''
-'''    
-# カテゴリー一覧   
-class CategoryView(ListView):
-    model = Post
-    template_name = 'blog/post_contents_list.html' 
-    #template_name = 'blog/post_list.html'
-    paginate_by = 5   #ページング件数 
-    
-    def get_queryset(self):
-        category = Category.objects.get(name=self.kwargs['category'])
-        #queryset = Post.objects.order_by('-created_data').filter(category=category)
-        queryset = Post.objects.order_by('-id').filter(category=category)
-        return queryset
-
-    # アクセスされた値を取得し辞書に格納
-    def get_context_data(self,**kwargs):
-        print(self.kwargs)
-        context = super().get_context_data(**kwargs)
-        context['category_key'] = self.kwargs['category']
-        return context
-'''
 
 class PostListView(ListView):
     context_object_name='post_list' #状態名
-    # queryset = Post.objects.order_by('-created_date')
     template_name = 'blog/post_list.html'
     paginate_by = 5   #1ページに何件のレコードを表示させるか   
     model = Post
     
     def get_queryset(self, **kwargs):
         category_name = self.kwargs.get('category',None)   #URLのパラメータを辞書型でgetし、category_nameへ代入
-        queryset = Post.objects.order_by('-created_date')  #作成日時を降順に並べ替えてソートする -#1
+        queryset = Post.objects.order_by('-created_date')  #作成日時を降順に並べ替えてソートする -#1   
         
-        
-        #print(queryset.query)   
-        
-        if category_name:
-            #categoryobj = Category.objects.get(name=category_name)  # [カテゴリテーブル]からURLのパラメータを条件にフィルタリング
-            #queryset = queryset.filter(category=category)        # #1に「カテゴリー名」でフィルタをかける
-            
+        if category_name:            
             queryset = queryset.filter(category__name = category_name)  #少なくとも1つ以上の'category_name'を持つカテゴリ記事の情報をクエリする
             
-            #queryset = queryset.select_related('category')
-            
-            #queryset = Post.objects.select_related('category').filter(category__isnull = True)
-            #queryset = Post.objects.order_by('-created_date')
-            
-           #category_name is Noneのとき
-         
-            #category = Category.objects.get(name=category_name)
-            #queryset = Post.objects.order_by('-created_date').filter(category=category)
-        
         queryset = queryset.select_related('category')    
-        
-        #queryset = Post.objects.order_by('-created_date')
         
         query = self.request.GET.get('query')
         if query:
@@ -86,33 +35,19 @@ class PostListView(ListView):
             if len(query) > 100 :
                 print("error")
                 messages.add_message(self.request,messages.ERROR,'100文字以内で入力してください.')
-                #messages.error(self.request,'100文字以内で入力してください。')
             else :
                 messages.add_message(self.request,messages.INFO,query)  #検索結果メッセージ
         queryset = queryset.annotate(cnt=Count('comments__id',filter=(Q(comments__approved_comment=1))))#|Q(comments__approved_comment=None))))
-        #print(queryset.query)
+
         return queryset
         
     # アクセスされた値を取得し辞書に格納
     def get_context_data(self,**kwargs):
         context = super().get_context_data(**kwargs) 
-        #print("Context1:",context)
-        context['category_list'] = Category.objects.all()  #カテゴリー一覧をcontext['category_list']へデータを格納
-        #context['category_name'] = Category.objects.select_related()
-        #print("Context2:",context) #カテゴリー一覧を追加したcontextデータ
-                       
+        context['category_list'] = Category.objects.all()  #カテゴリー一覧をcontext['category_list']へデータを格納               
         category_name = self.kwargs.get('category',None)
         if category_name:
             context['category_key'] = self.kwargs['category']
-            #print("Context3:",context) 
-        
-        '''
-        if category_name == None:
-            pass
-        elif category_name == self.kwargs.get('category'):
-            print(category_name) 
-            context['category_key'] = self.kwargs['category']
-        '''
 
         return context      
     

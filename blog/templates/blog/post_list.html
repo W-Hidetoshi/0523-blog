@@ -69,38 +69,6 @@
     </a>
     <br><br>
     {% endfor %} 
-
-
-      {% comment %}
-      {% for post in post_list %}
-        <div class="post">
-            <div class="date">
-                {{ post.published_date }}
-            </div>
-            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-            <p>{{ post.text | linebreaksbr }}</p>
-        </div>
-        <a href="{% url 'post_detail' pk=post.pk %}">
-            Comments:{{ post.approved_comments.count }}
-        </a>
-        {% endfor %}    
-       {% endcomment %}
-
-    {% comment %}
-        {% for post in posts %}
-        <div class="post">
-            <div class="date">
-                {{ post.published_date }} 
-            </div>             
-            <h2><a href="{% url 'post_detail' pk=post.pk %}">{{ post.title }}</a></h2>
-            <p>{{ post.text | linebreaksbr }}</p>
-            </div>
-            <a href="{% url 'post_detail' pk=post.pk %}">
-                Comments:{{ post.approved_comments.count }}
-            </a>
-            
-            {% endfor %}
-    {% endcomment %}
         
     <!--以下はページネーション-->
     <nav aria-label="Page navigation">
@@ -125,17 +93,7 @@
                     <li class="disabled"><a class="page-link text-secondary d-inline-block text-muted" href="#">・・・</a></li>
                 {% endif %}
             {% endfor %}
-
-          {% comment %}
-          {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-              <li class="page-item active"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-            {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
-              <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
-            {% endif %}
-          {% endfor %}
-          {% endcomment %}
-          
+            
           {% if page_obj.has_next %}
             <li class="page-item">
               <a class="page-link" href="?page={{ page_obj.next_page_number }}" aria-label="Next">
